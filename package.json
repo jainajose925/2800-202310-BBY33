@@ -1,0 +1,19 @@
+{
+  "name": "2800-202310-bby33",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jainajose925/2800-202310-BBY33.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jainajose925/2800-202310-BBY33/issues"
+  },
+  "homepage": "https://github.com/jainajose925/2800-202310-BBY33#readme"
+}
