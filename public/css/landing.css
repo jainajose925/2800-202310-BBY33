@@ -1,0 +1,65 @@
+/**FOR BOTH LOGIN AND SIGNUP PAGES**/
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
+
+body {
+  font-family: 'Comfortaa', cursive;
+  background-color: #C0E8FF;
+}
+
+#loginForm {
+  height: 60%;
+  width: 70%;
+  margin: auto;
+  margin-top: 20%;
+  padding: 15% 3% 20% 3%;
+  background-color: #E69FFF;
+  border: solid #FFFFFF;
+  border-radius: 18%/20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-group {
+  margin-top: 4%;
+}
+
+button {
+  margin:auto auto 3% auto;
+  height: 35px;
+  width: 150px;
+  border: solid #4e4e4e;
+  background-color: #C7FFF2;
+  border-radius: 10%/30%;
+}
+
+#login {
+  margin-top: 4%;
+}
+
+#signup {
+  height: 25px;
+  width: 110px;
+  font-size: small;
+}
+
+button:hover {
+  border-width: 3px;
+  box-shadow: 2px 2px 4px #2e2e2e;
+}
+
+input[type="text"] {
+  height: 40px;
+}
+
+.form-control:focus {
+  border-color: #4e4e4e;
+  border-width: 3px;
+  box-shadow: 2px 2px 5px #2e2e2e;
+}
+
+h1 {
+  color: #FFFFFF;
+}
+
