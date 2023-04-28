@@ -1,24 +1,33 @@
-const express = require("express");
+const express= require("express");
 const app = express();
-app.use(express.json());
-const fs = require("fs");
-const mongoose = require('mongoose');
+const fs= require("fs");
+const mongoose= require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+app.use(express.json());
 
 
+
+// module.exports = function (app);
 // Connection to MongoDB
-const uri = fs.readFileSync("./private/mongoDB.txt", "utf8");
-const client = new MongoClient(uri);
+// const uri = fs.readFileSync("./private/mongoDB.txt", "utf8");
+// const client = new MongoClient(uri);
 
 app.use("/js", express.static("./public/js"));
-
 app.use("/css", express.static("./public/css"));
-
 app.use("/img", express.static("./public/img"));
-
 app.use("/html", express.static("./app/html"));
 
+
+app.get('/', (req, res) => {
+    let doc = fs.readFileSync("./app/html/landing.html", "utf-8");
+    res.send(doc);
+})
+
+app.get('/signUp', (req, res) => {
+    let doc = fs.readFileSync("./app/html/signup.html", "utf-8");
+    res.send(doc);
+})
 app.post('/register', async (req, res) => {
     try {
         await createUser(req.body.username, req.body.password);
@@ -27,6 +36,7 @@ app.post('/register', async (req, res) => {
         res.status(400).send({ error: error.message });
     }
 });
+
 
 app.post('/login', async (req, res) => {
     try {
@@ -63,31 +73,31 @@ app.listen(port, () => {
 
 
 
-mongoose.connect('<mongodb_connection_string>', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-})
-    .then(() => console.log('MongoDB connected'))
-    .catch((err) => console.log('Error connecting to MongoDB:', err));
-
-
-const userSchema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    data: { type: Object, default: {} },
-});
-
-userSchema.pre('save', async function (next) {
-    const user = this;
-    if (user.isModified('password')) {
-        user.password = await bcrypt.hash(user.password, 10);
-    }
-    next();
-});
-
-const User = mongoose.model('User', userSchema);
+// mongoose.connect('<mongodb_connection_string>', {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     useFindAndModify: false,
+//     useCreateIndex: true,
+// })
+//     .then(() => console.log('MongoDB connected'))
+//     .catch((err) => console.log('Error connecting to MongoDB:', err));
+//
+//
+// const userSchema = new mongoose.Schema({
+//     username: { type: String, required: true, unique: true },
+//     password: { type: String, required: true },
+//     data: { type: Object, default: {} },
+// });
+//
+// userSchema.pre('save', async function (next) {
+//     const user = this;
+//     if (user.isModified('password')) {
+//         user.password = await bcrypt.hash(user.password, 10);
+//     }
+//     next();
+// });
+//
+// const User = mongoose.model('User', userSchema);
 
 
 async function createUser(username, password) {
