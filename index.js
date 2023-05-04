@@ -16,18 +16,22 @@ app.use(express.json());
 app.use("/js", express.static("./public/js"));
 app.use("/css", express.static("./public/css"));
 app.use("/img", express.static("./public/img"));
-app.use("/html", express.static("./app/html"));
+
+app.set('view engine', 'ejs');
 
 
 app.get('/', (req, res) => {
-    let doc = fs.readFileSync("./app/html/landing.html", "utf-8");
-    res.send(doc);
+    res.render("landing");
 })
 
 app.get('/signUp', (req, res) => {
-    let doc = fs.readFileSync("./app/html/signup.html", "utf-8");
-    res.send(doc);
+    res.render("signup");
 })
+
+app.get('/login', (req, res) => {
+    res.render("login");
+})
+
 app.post('/register', async (req, res) => {
     try {
         await createUser(req.body.username, req.body.password);
