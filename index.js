@@ -1,17 +1,54 @@
-const express= require("express");
+
+const path = require('path')
+require('dotenv').config({ path: path.resolve(__dirname, '.env') })
+
+require("./utils.js");
+const express = require('express');
 const app = express();
-const fs= require("fs");
-const mongoose= require('mongoose');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const fs = require('fs');
 const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const port = process.env.PORT || 3000;
+const joi = require('joi');
 const jwt = require('jsonwebtoken');
-app.use(express.json());
 
 
+const mongodb_host = process.env.MONGODB_HOST;
+const mongodb_user = process.env.MONGODB_USER;
+const mongodb_password = process.env.MONGODB_PASSWORD;
+const mongodb_database = process.env.MONGODB_DATABASE;
+const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
 
-// module.exports = function (app);
-// Connection to MongoDB
-// const uri = fs.readFileSync("./private/mongoDB.txt", "utf8");
-// const client = new MongoClient(uri);
+const node_session_secret = process.env.NODE_SESSION_SECRET;
+
+let {database} = include('databaseConnection');
+
+const userCollection = database.db(mongodb_database).collection('users');
+
+app.use(express.urlencoded({extended: false}));
+
+const url = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_database}?retryWrites=true&w=majority`;
+
+console.log(url)
+let mongoStore = MongoStore.create({
+    mongoUrl: url,
+    crypto: {
+        secret: mongodb_session_secret
+    }
+});
+
+app.use(session({
+    secret: node_session_secret,
+    store: mongoStore,
+    resave: true,
+    saveUninitialized: false,
+    cookie: {
+        secure: false, // only set this if you're using HTTPS
+        sameSite: 'none'
+    }
+}));
 
 app.use("/js", express.static("./public/js"));
 app.use("/css", express.static("./public/css"));
@@ -69,39 +106,82 @@ app.get('/get-data', async (req, res) => {
     }
 });
 
-// Start the server
-const port = process.env.PORT || 3000;
+app.post('/api/login', async (req, res) => {
+    let {email, password} = req.body;
+    console.log("username: " + email)
+    const schema = joi.object({
+        email: joi.string().email().required(),
+    });
+
+    const result = schema.validate({email});
+    if (result.error) {
+        res.send(result.error.details[0].message);
+        return;
+    }
+    const account = await userCollection.find({email}).project({username: 1, email: 1, password: 1, _id: 1}).toArray();
+    if (account.length === 0) {
+        res.send("Email not found");
+        return res.redirect('/login?error=Email not found');
+    }
+    if (await bcrypt.compare(password, account[0].password)) {
+        const authToken = await authenticateUser(account[0].username, account[0].password);
+        req.session.authToken = authToken;
+        req.session.username = account[0].username;
+        req.session.email = account[0].email;
+        req.session.authenticated = true;
+        res.redirect('/dashboard');
+
+    } else {
+        console.log("wrong password");
+        return res.redirect('/login?error=Wrong password');
+    }
+});
+
+app.post('/api/register', async (req, res) => {
+    let {username, email, password} = req.body;
+    const schema = joi.object({
+        username: joi.string().min(3).max(30).required(),
+        email: joi.string().email().required(),
+        password: joi.string().min(8).max(30).required(),
+    });
+    const result = schema.validate({username, email, password});
+    if (result.error) {
+        res.redirect('/signUp?error=' + result.error.details[0].message);
+        return;
+    }
+    const existingUser = await userCollection.find({email}).project({username: 1, email: 1, password: 1, _id: 1}).toArray();
+    if (existingUser.length > 0) {
+        res.redirect('/signUp?error=Email already exists');
+        return;
+    }
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const newUser = {
+        username,
+        email,
+        password: hashedPassword
+
+    };
+    const insertResult = await userCollection.insertOne(newUser);
+    if (insertResult.insertedCount === 1) {
+        const authToken = await authenticateUser(username, password);
+        req.session.authToken = authToken;
+        req.session.username = username;
+        req.session.email = email;
+        req.session.authenticated = true;
+        res.redirect('/dashboard?newUser=true');
+    }
+
+});
+
+
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
 
 
 
-// mongoose.connect('<mongodb_connection_string>', {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//     useFindAndModify: false,
-//     useCreateIndex: true,
-// })
-//     .then(() => console.log('MongoDB connected'))
-//     .catch((err) => console.log('Error connecting to MongoDB:', err));
-//
-//
-// const userSchema = new mongoose.Schema({
-//     username: { type: String, required: true, unique: true },
-//     password: { type: String, required: true },
-//     data: { type: Object, default: {} },
-// });
-//
-// userSchema.pre('save', async function (next) {
-//     const user = this;
-//     if (user.isModified('password')) {
-//         user.password = await bcrypt.hash(user.password, 10);
-//     }
-//     next();
-// });
-//
-// const User = mongoose.model('User', userSchema);
+
 
 
 async function createUser(username, password) {
