@@ -132,4 +132,8 @@ dist
 
 
 .idea
+<<<<<<< Updated upstream
 
+=======
+package-lock.json
+>>>>>>> Stashed changes

@@ -1,40 +1,36 @@
-
-// import mongoose from 'mongoose'
 require('ejs');
 require('./functions');
 require('dotenv').config();
-const express= require("express");
+const express = require("express");
+const User = require('./models/user');
+
 const session = require("express-session")
 const app = express();
 const mongoose = require('mongoose');
-const { MongoClient, ServerApiVersion } = require('mongodb');
-
-/*
-const path = require('path')
-require('dotenv').config({ path: path.resolve(__dirname, '.env') })
-*/
-
-
 const MongoStore = require('connect-mongo');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const port = process.env.PORT || 3000;
-const joi = require('joi');
 const jwt = require('jsonwebtoken');
 const routes = require('./routes');
 
+// Fixed the import of authMiddleware and dataController
+const authMiddleware = require('./middleware/authMiddleware');
+const { setUserDataController, getUserDataController } = require('./controllers/dataController');
 
-let mongoStore = MongoStore.create({
-    mongoUrl: url,
-    crypto: {
-        secret: process.env.MONGODB_SESSION_SECRET
-    }
-});
+const mongodb_host = process.env.MONGODB_HOST;
+const mongodb_user = process.env.MONGODB_USER;
+const mongodb_password = process.env.MONGODB_PASSWORD;
+const mongodb_database = process.env.MONGODB_DATABASE;
+const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
+const port = process.env.PORT || 3000;
+const node_session_secret = process.env.NODE_SESSION_SECRET;
 
+const url = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_database}?retryWrites=true&w=majority`;
+console.log(url)
 app.use(session({
     secret: process.env.NODE_SESSION_SECRET,
-    store: mongoStore,
+    store: MongoStore.create({ mongoUrl: url }),
     resave: true,
     saveUninitialized: false,
     cookie: {
@@ -43,42 +39,10 @@ app.use(session({
     }
 }));
 
-// module.exports = function (app);
+
+
 // Connection to MongoDB
-// mongodb+srv://${mdb_user}:${mdb_password}@${mdb_host}/sessions
-
-
-const logOutWhen = 60 * 60 * 1000; //expires after 1 hour  (hours * minutes * seconds * millis)
-// Start the server
-const port = process.env.PORT || 3000;
-const node_session_secret = process.env.NODE_SESSION_SECRET;
-
-const mdb_host = process.env.MONGODB_HOST;
-const mdb_user = process.env.MONGODB_USER;
-const mdb_password = process.env.MONGODB_PASSWORD;
-const mdb_dbName = process.env.MONGODB_DATABASE;
-const mdb_secret = process.env.MONGODB_SESSION_SECRET;
-
-// const url = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_database}?retryWrites=true&w=majority`;
-const uri = "mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/?retryWrites=true&w=majority";
-const client = new MongoClient(uri, {
-    serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
-    }
-});
-
-let {database} = include('connection');
-const usrCollection = database.db(mdb_dbName).collection('users');
-
-app.use(session({
-    secret: node_session_secret,
-    saveUninitialized: false,
-    resave: true
-}));
-
-mongoose.connect(uri, {
+mongoose.connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
@@ -87,8 +51,7 @@ mongoose.connect(uri, {
 
 
 app.use(express.json());
-
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/js", express.static("./public/js"));
 app.use("/css", express.static("./public/css"));
@@ -196,20 +159,6 @@ app.get('/get-data', async (req, res) => {
     }
 });
 
-async function run() {
-    try {
-        // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
-        // Send a ping to confirm a successful connection
-        await client.db("admin").command({ ping: 1 });
-        console.log("Pinged your deployment. You successfully connected to MongoDB!");
-    } finally {
-        // Ensures that the client will close when you finish/error
-        await client.close();
-    }
-}
-run().catch(console.dir);
-
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
@@ -234,7 +183,7 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
-const User = mongoose.model('User', userSchema);
+
 
 
 async function createUser(email ,username, password) {
@@ -267,4 +216,5 @@ async function getUserData(token) {
     const user = await User.findById(decoded._id);
     return user;
 }
+
 
