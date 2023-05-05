@@ -1,12 +1,3 @@
-/**
- *
- *  Back Button Functions.
- */
-const backBttn = document.getElementById("backButton");
-backBttn.addEventListener("click", function () {
-    window.history.back();
+document.getElementById("backButton").addEventListener("click", function () {
+    window.location.href = '/';
 });
-
-/**
- * Might implement the MONGODB Sign up here.
- */

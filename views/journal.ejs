@@ -1,0 +1,12 @@
+<%- include("templates/header") %>
+    </head>
+<body>
+<h2>Journal</h2>
+
+    <form action="/saveJournal" method="post">
+        <label>
+            <input name="journalTextBox" type="text" placeholder="Type away" value="<%= journalContent %>">
+        </label>
+        <button>Save</button>
+    </form>
+<%- include("templates/footer") %>
