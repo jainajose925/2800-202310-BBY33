@@ -1,0 +1,134 @@
+.container {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  width: 80%;
+  height: auto;
+  padding: 15px;
+}
+
+@media (min-width: 800px) {
+  .conatiner {
+    width: 60%;
+  }
+}
+
+#goToTracker {
+  background-color: #7DF6AD;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding: 15px;
+  font-size: large;
+  position: relative;
+  border:solid #4e4e4e;
+}
+
+#goToTracker::after {
+  content: ">";
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  font-weight: bold;
+}
+
+#moodLogger {
+  background-color: #DCC4C4;
+  border: solid #4e4e4e;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  font-size: large;
+  margin-bottom: 15px;
+}
+
+#moodButtons {
+  display: flex;
+  flex-direction: row;
+}
+
+#moodLabels {
+  display: flex;
+  flex-direction: row;
+  font-size: medium;
+  margin: 0 25px;
+}
+
+#moodLabels div {
+  margin: 0 10px;
+}
+
+.moodButton {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin: 0 25px;
+  cursor: pointer;
+  flex: 20%;
+}
+
+#happyButton {
+  background-color: #ADAE5B;
+}
+
+#sadButton {
+  background-color: #7B9FD6;
+}
+
+#angryButton {
+  background-color: #FA7F7F;
+}
+
+#anxiousButton {
+  background-color: #3E3F41;
+}
+
+#tiredButton {
+  background-color: #B2BAB1;
+}
+
+#greetAndHelp {
+  display: flex;
+  font-size: x-large;
+  height: 100px;
+  margin-bottom:15px
+}
+
+#greeting {
+  flex: 65%;
+  background-color: #D9D9D9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid #4e4e4e;
+}
+
+#help {
+  flex: 30%;
+  background-color: #FFD12F;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid #4e4e4e;
+}
+
+.gap {
+  margin-left: 5%;
+}
+
+#gratitude {
+  height: 300px;
+  background-color: #E69FFF;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: solid #4e4e4e;
+}
+
+.textbox {
+  width: 90%;
+  height: 90%; 
+}
