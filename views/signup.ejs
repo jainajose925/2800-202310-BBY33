@@ -11,29 +11,30 @@
       <h1>Sign Up</h1>
 
       <!-- Form -->
-      <form>
+      <form action="/register" method="post">
         <!-- Email Input -->
         <div class="form-group">
-          <input type="email" class="form-control" placeholder="Email" required>
+          <input name="emailAddress" type="email" class="form-control" placeholder="Email" required>
         </div>
 
         <!-- Username Input -->
         <div class="form-group">
-          <input type="username" class="form-control" placeholder="Username" required>
+          <input name="nickname" type="username" class="form-control" placeholder="Username" required>
         </div>
         <!-- Password Input -->
         <div class="form-group">
-          <input type="password" class="form-control" id="exampleInputEmail1" placeholder="Password" required>
+          <input name="key" type="password" class="form-control" id="exampleInputEmail1" placeholder="Password" required>
         </div>
 
         <!-- Confirm Password Input -->
         <div class="form-group">
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password" required>
+          <input name="confirmKey" type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password" required>
         </div>
+
+      <button id="login">Sign Up</button>
       </form>
 
       <!-- Sign Up Button -->
-      <button id="login">Sign Up</button>
     </div>
 
     <script src="/js/signUp.js"></script>
