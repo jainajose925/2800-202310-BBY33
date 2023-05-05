@@ -81,6 +81,13 @@ app.get('/jjournal', (req, res) => {
     }
 })
 
+app.get('/mood', (req, res) => {
+    // if (req.session.authenticated) {
+        res.render('moodTracker')
+    // } else {
+    //     res.redirect('/');
+    // }
+})
 app.get('/main', (req, res) => {
     if (req.session.authenticated) {
         res.render('main', {username: req.session.username});
@@ -90,6 +97,11 @@ app.get('/main', (req, res) => {
     }
 })
 
+app.post('/logMood', async (req, res) => {
+    console.log(req.session.data);
+    req.session.data.mood[0] = req.body.mood;
+    console.log(req.session.data.mood[0]);
+})
 app.post('/saveJournal', async (req, res) => {
     req.session.data.jjournal[0] = req.body.journalTextBox;
     res.redirect('/jjournal');
@@ -122,6 +134,7 @@ app.post('/login', async (req, res) => {
         res.status(401).send({ error: error.message });
     }
 });
+
 
 app.post('/set-data', async (req, res) => {
     try {
@@ -167,7 +180,8 @@ const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     data: { type: Object, default: {} },
-    jjournal: { type: Array, default: ["Sample Text"]}
+    jjournal: { type: Array, default: ["Sample Text"]},
+    mood: { type: Array, default: new Array(30)}
 });
 
 userSchema.pre('save', async function (next) {
