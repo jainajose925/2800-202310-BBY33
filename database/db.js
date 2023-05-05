@@ -1,4 +1,5 @@
 const { MongoClient } = require('mongodb');
+const { ObjectId } = require('mongodb');
 const dotenv = require('dotenv');
 const path = require('path');
 
@@ -15,27 +16,29 @@ const client = new MongoClient(url);
 let userCollection;
 
 async function connectToDatabase() {
-    // TODO database connection logic here...
+    try {
+        await client.connect();
+        userCollection = client.db(mongodb_database).collection('users');
+    } catch (err) {
+        console.error(err);
+        process.exit(1);
+    }
 }
 
 async function findUserByEmail(email) {
-    // TODO find user by email logic here...
     return await userCollection.findOne({ email });
 }
 
 async function insertUser(user) {
-    // TODO insert user logic here...
     return await userCollection.insertOne(user);
 }
 
 async function updateUserData(userId, data) {
-    // TODO update user data logic here...
-    return await userCollection.updateOne({ _id: userId }, { $set: { data: data } });
+    return await userCollection.updateOne({ _id: ObjectId(userId) }, { $set: { data: data } });
 }
 
 async function getUserData(userId) {
-    // TODO get user data logic here...
-    const user = await userCollection.findOne({ _id: userId });
+    const user = await userCollection.findOne({ _id: ObjectId(userId) });
     return user.data;
 }
 
