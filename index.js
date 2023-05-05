@@ -28,9 +28,9 @@ app.get('/signUp', (req, res) => {
     res.render("signup");
 })
 
-app.get('/login', (req, res) => {
-    res.render("login");
-})
+app.get('/main', (req, res) => {
+    res.render("main");
+});
 
 app.post('/register', async (req, res) => {
     try {
