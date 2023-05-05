@@ -98,12 +98,12 @@ app.get('/main', (req, res) => {
 })
 
 app.post('/logMood', async (req, res) => {
-    console.log(req.session.data);
     req.session.data.mood[0] = req.body.mood;
-    console.log(req.session.data.mood[0]);
+    await setUserData(req.session.token, {mood: req.session.data.mood});
 })
 app.post('/saveJournal', async (req, res) => {
     req.session.data.jjournal[0] = req.body.journalTextBox;
+    await setUserData(req.session.token, {jjournal: req.session.data.jjournal});
     res.redirect('/jjournal');
 })
 app.post('/register', async (req, res) => {
@@ -126,6 +126,7 @@ app.post('/login', async (req, res) => {
             req.session.username = data.username;
             req.session.data = data;
             req.session.cookie.maxAge = logOutWhen;
+            req.session.token = token;
             res.redirect('/main');
             return;
         }
@@ -216,7 +217,7 @@ async function authenticateUser(email, password) {
 
 async function setUserData(token, data) {
     const decoded = jwt.verify(token, 'secret-key');
-    const user = await User.findByIdAndUpdate(decoded._id, { data }, { new: true });
+    const user = await User.findByIdAndUpdate(decoded._id, data, { new: true });
     return user.data;
 }
 
