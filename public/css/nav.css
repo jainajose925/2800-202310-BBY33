@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
+
+body {
+  font-family: 'Comfortaa', cursive;
+  background-color: #C0E8FF;
+}
+
+nav {
+  background-color: #E69FFF;
+  border: solid #FFFFFF;
+}
+
+.navbar-brand {
+  color: #FFFFFF;
+}
+
+.dropdown-menu {
+  color:#FFFFFF;
+  background-color: #E69FFF;
+  border: none;
+  border: solid #e093fc;
+}
+
+.dropdown-item {
+  color:#FFFFFF;
+  background-color: #E69FFF;
+  border: none;
+}
+
+.btn {
+  padding: 5px;
+  color: #FFFFFF;
+  border: none;
+  background-color: transparent;
+}
+
+button {
+  padding: 5px;
+  color: #FFFFFF;
+  border: none;
+  background-color: transparent;
+}
+
+button:hover {
+  color:black;
+  background-color: transparent;
+}
+
+.dropdown-item:hover {
+  color:black;
+  background-color: #E69FFF;
+}

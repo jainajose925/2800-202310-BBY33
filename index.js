@@ -1,3 +1,4 @@
+
 // import mongoose from 'mongoose'
 require('ejs');
 require('./functions');
@@ -7,24 +8,46 @@ const session = require("express-session")
 const app = express();
 const mongoose = require('mongoose');
 const { MongoClient, ServerApiVersion } = require('mongodb');
+
+/*
+const path = require('path')
+require('dotenv').config({ path: path.resolve(__dirname, '.env') })
+*/
+
+
 const MongoStore = require('connect-mongo');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const port = process.env.PORT || 3000;
+const joi = require('joi');
 const jwt = require('jsonwebtoken');
+const routes = require('./routes');
 
+
+let mongoStore = MongoStore.create({
+    mongoUrl: url,
+    crypto: {
+        secret: process.env.MONGODB_SESSION_SECRET
+    }
+});
+
+app.use(session({
+    secret: process.env.NODE_SESSION_SECRET,
+    store: mongoStore,
+    resave: true,
+    saveUninitialized: false,
+    cookie: {
+        secure: false, // only set this if using HTTPS
+        sameSite: 'none'
+    }
+}));
 
 // module.exports = function (app);
 // Connection to MongoDB
 // mongodb+srv://${mdb_user}:${mdb_password}@${mdb_host}/sessions
 
-const uri = "mongodb+srv://teddystashtm:0JoeaXgUdjSupD3T@datastore.km7h18l.mongodb.net/?retryWrites=true&w=majority";
-const client = new MongoClient(uri, {
-    serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
-    }
-});
+
 const logOutWhen = 60 * 60 * 1000; //expires after 1 hour  (hours * minutes * seconds * millis)
 // Start the server
 const port = process.env.PORT || 3000;
@@ -35,6 +58,16 @@ const mdb_user = process.env.MONGODB_USER;
 const mdb_password = process.env.MONGODB_PASSWORD;
 const mdb_dbName = process.env.MONGODB_DATABASE;
 const mdb_secret = process.env.MONGODB_SESSION_SECRET;
+
+// const url = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_database}?retryWrites=true&w=majority`;
+const uri = "mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/?retryWrites=true&w=majority";
+const client = new MongoClient(uri, {
+    serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+    }
+});
 
 let {database} = include('connection');
 const usrCollection = database.db(mdb_dbName).collection('users');
@@ -63,6 +96,7 @@ app.use("/img", express.static("./public/img"));
 
 app.set('view engine', 'ejs');
 
+app.use('/', routes);
 
 app.get('/', (req, res) => {
     res.render("landing");
@@ -89,6 +123,12 @@ app.get('/mood', (req, res) => {
     // }
 })
 app.get('/main', (req, res) => {
+    res.render("main");
+});
+
+/*
+
+app.get('/main', (req, res) => {
     if (req.session.authenticated) {
         res.render('main', {username: req.session.username});
     }
@@ -96,6 +136,7 @@ app.get('/main', (req, res) => {
         res.redirect('/');
     }
 })
+*/
 
 app.post('/logMood', async (req, res) => {
     req.session.data.mood[0] = req.body.mood;
@@ -226,3 +267,4 @@ async function getUserData(token) {
     const user = await User.findById(decoded._id);
     return user;
 }
+

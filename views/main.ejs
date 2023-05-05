@@ -1,4 +1,5 @@
 <%- include("templates/header") %>
+/*
 <link rel="stylesheet" href="/css/landing.css">
 </head>
   <body>
@@ -6,3 +7,41 @@
       <h3>Hello! <%= username %></h3>
     </div>
 <%- include("templates/header") %>
+*/
+
+<link rel="stylesheet" type="text/css" href="/css/nav.css">
+<link rel="stylesheet" type="text/css" href="/css/main.css">
+</head>
+  <body>
+    <%-include("templates/nav") %>
+    <div class="container">
+      <div id = "goToTracker"><b>Your Week</b></div>
+      <div id = "moodLogger">
+        How are you feeling?
+        <div id = "moodButtons">
+          <div id="happyButton" class="moodButton"></div>
+          <div id="sadButton" class="moodButton"></div>
+          <div id="angryButton" class="moodButton"></div>
+          <div id="anxiousButton" class="moodButton"></div>
+        <div id="tiredButton" class="moodButton"></div>
+       </div>
+       <div id="moodLabels">
+        <div>Happy</div>
+        <div>Sad</div>
+        <div>Angry</div>
+        <div>Anxious</div>
+        <div>Tired</div>
+      </div>
+      </div>
+      <div id = greetAndHelp>
+        <div id = "greeting">Hello, user!</div>
+        <div id = "help" class="gap">Help</div>
+      </div>
+      <div id = "gratitude">
+        <h3>Today's Gratitudes</h3>
+        <br />
+        <textarea class="textbox"></textarea>
+      </div>
+    </div>
+<%- include("templates/footer") %>
+
