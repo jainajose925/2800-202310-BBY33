@@ -51,7 +51,7 @@ async function getUserData(userId) {
     return user.data;
 }
 
-connectToDatabase();
+connectToDatabase().then();
 
 module.exports = {
     mongoStore,

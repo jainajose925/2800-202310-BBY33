@@ -1,13 +1,4 @@
 <%- include("templates/header") %>
-/*
-<link rel="stylesheet" href="/css/landing.css">
-</head>
-  <body>
-    <div>
-      <h3>Hello! <%= username %></h3>
-    </div>
-<%- include("templates/header") %>
-*/
 
 <link rel="stylesheet" type="text/css" href="/css/nav.css">
 <link rel="stylesheet" type="text/css" href="/css/main.css">
@@ -34,7 +25,7 @@
       </div>
       </div>
       <div id = greetAndHelp>
-        <div id = "greeting">Hello, user!</div>
+        <div id = "greeting">Hello, <%= username %>!</div>
         <div id = "help" class="gap">Help</div>
       </div>
       <div id = "gratitude">

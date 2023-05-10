@@ -19,23 +19,26 @@ const saltRounds = 10;
     const account = await findUserByEmail(email);
     if (!account) {
         /* TODO: HTML Design */
-        // res.send("Email not found");
-        return res.redirect('/');
+        res.redirect('/');
+        return;
     }
     if (await bcrypt.compare(password, account.password)) {
         const refreshToken = await createRefreshToken(account);
-        const authToken = await authenticateUser(refreshToken);
-        req.session.authToken = authToken;
+        req.session.authToken = await authenticateUser(refreshToken);
         req.session.username = account.username;
         req.session.email = account.email;
         req.session.authenticated = true;
-        // res.redirect('/dashboard');
+        res.redirect('/dashboard');
+        // return {account, password};
+        return;
+
 
     } else {
         /* TODO: HTML Design */
         console.log("wrong password");
-
-        return res.redirect('/?error=Wrong password');
+        res.redirect('/');
+        return;
+        // return res.redirect('/?error=Wrong password');
     }
 }
 
@@ -72,18 +75,8 @@ async function registerUser(req, res) {
         password: hashedPassword
     };
 
-    const insertResult = await insertUser(newUser);
-
-    if (insertResult.insertedCount === 1) {
-        const refreshToken = await createRefreshToken(newUser);
-        const authToken = await authenticateUser(username, password);
-        req.session.authToken = authToken;
-        req.session.refreshToken = refreshToken;
-        req.session.username = username;
-        req.session.email = email;
-        req.session.authenticated = true;
-        res.redirect('/dashboard');
-    }
+    await insertUser(newUser);
+    res.redirect('/');
 }
 
 async function createRefreshToken(user) {
@@ -91,7 +84,6 @@ async function createRefreshToken(user) {
 }
 
 async function authenticateUser(refreshToken) {
-    // console.log(refreshToken.toString() + " \n " + process.env.REFRESH_TOKEN_SECRET);
     const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
     return jwt.sign({
         username: decoded.username,
@@ -102,8 +94,7 @@ async function authenticateUser(refreshToken) {
 async function validateAccessToken(authToken) {
     try {
         const decoded = jwt.verify(authToken, process.env.ACCESS_TOKEN_SECRET);
-        const user = await findUserByEmail(decoded.email);
-        return user;
+        return await findUserByEmail(decoded.email);
     } catch (error) {
         throw new Error(error.message);
     }

@@ -1,8 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { loginUser, registerUser } = require('../controllers/authController');
+const { loginUser, registerUser, createRefreshToken} = require('../controllers/authController');
 
-router.post('/api/login', loginUser);
-router.post('/api/register', registerUser);
+router.post('/', loginUser);
+
+router.get('/', async (req, res) => {
+    if (req.session.authenticated) {
+        res.redirect('/dashboard');
+    } else
+        res.render("landing");
+})
+
 
 module.exports = router;

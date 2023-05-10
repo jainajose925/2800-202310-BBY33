@@ -1,14 +1,22 @@
-const mongoose = require('mongoose');
+const {mongoose} = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+
+const expireTime = 60 * 60 * 1000; // (Minutes * Seconds * Milliseconds)
+const url = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_HOST}/${process.env.MONGODB_DATABASE}?retryWrites=true&w=majority`;
+mongoose.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+    .then(() => console.log('MongoDB connected'))
+    .catch((err) => console.log('Error connecting to MongoDB:', err));
 
 const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     username: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    data: { type: Object, default: {} },
-    jjournal: { type: Array, default: ["Sample Text"]},
-    mood: { type: Array, default: new Array(30)}
+    password: { type: String, required: true }
+    // data: { type: Object, default: {} },
+
 });
 
 userSchema.pre('save', async function (next) {
@@ -27,6 +35,7 @@ async function createUser(email ,username, password) {
 }
 
 async function authenticateUser(email, password) {
+    console.log(password);
     const user = await User.findOne({ email: email });
     if (user === null) {
         throw new Error('User not found');
@@ -36,8 +45,7 @@ async function authenticateUser(email, password) {
         throw new Error('Invalid password');
     }
 
-    const token = jwt.sign({ _id: user._id }, 'secret-key', { expiresIn: logOutWhen });
-    return token;
+    return jwt.sign({_id: user._id}, 'secret-key', {expiresIn: expireTime});
 }
 
 async function setUserData(token, data) {
