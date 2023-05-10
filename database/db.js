@@ -3,14 +3,15 @@ const { ObjectId } = require('mongodb');
 const dotenv = require('dotenv');
 const path = require('path');
 const MongoStore = require('connect-mongo');
+const env = require('../env');
 
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-const mongodb_host = process.env.MONGODB_HOST;
-const mongodb_user = process.env.MONGODB_USER;
-const mongodb_password = process.env.MONGODB_PASSWORD;
-const mongodb_database = process.env.MONGODB_DATABASE;
-const mdb_secret = process.env.MONGODB_SESSION_SECRET;
+const mongodb_host = env.MONGODB_HOST;
+const mongodb_user = env.MONGODB_USER;
+const mongodb_password = env.MONGODB_PASSWORD;
+const mongodb_database = env.MONGODB_DATABASE;
+const mdb_secret = env.MONGODB_SESSION_SECRET;
 
 const url = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_database}?retryWrites=true&w=majority`;
 
