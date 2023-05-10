@@ -7,7 +7,7 @@ const app = express();
 
 const routes = require('./routes');
 
-const {mongoStore} = require('./database/db');
+const {mongoStore, url} = require('./database/db');
 console.log(__dirname);
 
 const port = env.PORT || 8080;
@@ -60,6 +60,7 @@ app.post('/signout', (req, res) => {
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
+    console.log(`connectionURL: ${url}`);
 });
 
 

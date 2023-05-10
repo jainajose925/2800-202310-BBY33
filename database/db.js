@@ -60,4 +60,5 @@ module.exports = {
     insertUser,
     updateUserData,
     getUserData,
+    url
 };
