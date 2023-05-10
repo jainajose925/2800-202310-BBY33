@@ -10,7 +10,7 @@ const routes = require('./routes');
 const {mongoStore} = require('./database/db');
 console.log(__dirname);
 
-const port = env.PORT || 3000;
+const port = env.PORT || 8080;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
