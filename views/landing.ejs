@@ -3,36 +3,60 @@
 
 </head>
 <body>
-  <!-- Login Form -->
-  <div id="loginForm">
-    <!-- Heading -->
-    <h1>Ground'd</h1>
 
-    <!-- Form -->
-    <form action="/login" method="post">
-      <!-- Username Input -->
-      <div class="form-group">
-        <input name="email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+  <div class="flip-card">
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <h1>Ground'd</h1>
+        <h2 class="title">Log In</h2>
+        <form id="loginForm" action="/login" method="post">
+
+          <div class="form-group">
+            <input name="email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+          </div>
+    
+          <div class="form-group">
+            <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+          </div>
+    
+            <button id="login">Log In<span></span></button>
+        </form>
+        <p>OR</p>
+        <button class="flip-btn"><span>Sign Up</span></button>
+        <button class="pwReset">I forgot my password!</button>
       </div>
 
-      <!-- Password Input -->
-      <div class="form-group">
-        <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      <div class="flip-card-back">
+        <h1>Ground'd</h1>
+        <h2 class="title">Sign Up</h2>
+        <form id="signupForm" action="/signup" method="post">
+          <!-- Email Input -->
+          <div class="form-group">
+            <input name="email" type="email" class="form-control" placeholder="Email" required>
+          </div>
+  
+          <div class="form-group">
+            <input name="username" type="text" class="form-control" placeholder="Username" required>
+          </div>
+
+          <div class="form-group">
+            <input name="password" type="password" class="form-control" id="exampleInputEmail1" placeholder="Password" required>
+          </div>
+
+          <div class="form-group">
+            <input name="confirmKey" type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password" required>
+          </div>
+  
+        <button id="login">Sign Up<span></span></button>
+        </form>
+        <p>OR</p>
+        <button class="back-btn"><span>Back to Log In</span></button>
+        <button class="pwReset">I forgot my password!</button>
       </div>
-
-        <button id="login">Log In</button>
-    </form>
-<!--      <form action="/api/login" method="post">-->
-<!--      </form>-->
-
-    <!-- Log In Button -->
-
-    <!-- OR Heading -->
-    <h6>OR</h6>
-
-    <!-- Sign Up Button -->
-    <button id="signup">Sign Up</button>
+    </div>
   </div>
+  
+  
 
   <script src="/js/landing.js"></script>
 <%- include("templates/footer") %>
