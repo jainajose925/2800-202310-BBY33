@@ -1,6 +1,7 @@
 require('ejs');
 require('./functions');
-const env = require('./env.js');
+require('dotenv').config();
+// const env = require('./env.js');
 const express = require("express");
 const session = require("express-session")
 const app = express();
@@ -10,7 +11,7 @@ const routes = require('./routes');
 const {mongoStore, url} = require('./database/db');
 console.log(__dirname);
 
-const port = env.PORT || 8080;
+const port = process.env.PORT || 8080;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -18,7 +19,7 @@ const authRoute = require('./routes/auth');
 const registryRoute = require('./routes/create');
 
 app.use(session({
-    secret: env.NODE_SESSION_SECRET,
+    secret: process.env.NODE_SESSION_SECRET,
     store: mongoStore,
     resave: true,
     saveUninitialized: false,
