@@ -3,34 +3,31 @@ require('./functions');
 require('dotenv').config();
 const express = require("express");
 const User = require('./models/user');
-
 const session = require("express-session")
 const app = express();
 const mongoose = require('mongoose');
-const MongoStore = require('connect-mongo');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
 const jwt = require('jsonwebtoken');
 const routes = require('./routes');
+const saltRounds = 10;
+
+const {mongoStore} = require('./database/db');
+console.log(__dirname);
 
 // Fixed the import of authMiddleware and dataController
-const authMiddleware = require('./middleware/authMiddleware');
+const {sessionValidation, authMiddleware} = require('./middleware/authMiddleware');
 const { setUserDataController, getUserDataController } = require('./controllers/dataController');
-
-const mongodb_host = process.env.MONGODB_HOST;
-const mongodb_user = process.env.MONGODB_USER;
-const mongodb_password = process.env.MONGODB_PASSWORD;
-const mongodb_database = process.env.MONGODB_DATABASE;
-const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
+const {loginUser} = require("./controllers/authController");
+const {router} = require("express/lib/application");
+const {tester} = require("./controllers/testery");
 const port = process.env.PORT || 3000;
-const node_session_secret = process.env.NODE_SESSION_SECRET;
 
-const url = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_database}?retryWrites=true&w=majority`;
-console.log(url)
+// const url = `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_database}?retryWrites=true&w=majority`;
+
 app.use(session({
     secret: process.env.NODE_SESSION_SECRET,
-    store: MongoStore.create({ mongoUrl: url }),
+    store: mongoStore,
     resave: true,
     saveUninitialized: false,
     cookie: {
@@ -42,12 +39,12 @@ app.use(session({
 
 
 // Connection to MongoDB
-mongoose.connect(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-    .then(() => console.log('MongoDB connected'))
-    .catch((err) => console.log('Error connecting to MongoDB:', err));
+// mongoose.connect(url, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true
+// })
+//     .then(() => console.log('MongoDB connected'))
+//     .catch((err) => console.log('Error connecting to MongoDB:', err));
 
 
 app.use(express.json());
@@ -61,12 +58,19 @@ app.set('view engine', 'ejs');
 
 app.use('/', routes);
 
+
 app.get('/', (req, res) => {
+    if (req.session.authenticated) {
+        res.redirect('/dashboard');
+    } else
     res.render("landing");
 })
 
 app.get('/signUp', (req, res) => {
-    res.render("signup");
+    if (req.session.authenticated) {
+        res.redirect('/dashboard');
+    } else
+        res.render("signup");
 })
 
 app.get('/jjournal', (req, res) => {
@@ -85,59 +89,51 @@ app.get('/mood', (req, res) => {
     //     res.redirect('/');
     // }
 })
-app.get('/main', (req, res) => {
-    res.render("main");
-});
 
-/*
-
-app.get('/main', (req, res) => {
+app.get('/dashboard', (req, res) => {
+    console.log(req.session.authenticated);
     if (req.session.authenticated) {
-        res.render('main', {username: req.session.username});
-    }
-    else {
+        res.render("main", {username: req.session.username});
+    } else
         res.redirect('/');
-    }
-})
-*/
-
-app.post('/logMood', async (req, res) => {
-    req.session.data.mood[0] = req.body.mood;
-    await setUserData(req.session.token, {mood: req.session.data.mood});
-})
-app.post('/saveJournal', async (req, res) => {
-    req.session.data.jjournal[0] = req.body.journalTextBox;
-    await setUserData(req.session.token, {jjournal: req.session.data.jjournal});
-    res.redirect('/jjournal');
-})
-app.post('/register', async (req, res) => {
-    try {
-        await createUser(req.body.emailAddress, req.body.nickname, req.body.key);
-        res.status(201).send({ message: 'User registered successfully' });
-    } catch (error) {
-        res.status(400).send({ error: error.message });
-    }
 });
 
+// app.post('/logMood', async (req, res) => {
+//     req.session.data.mood[0] = req.body.mood;
+//     await setUserData(req.session.token, {mood: req.session.data.mood});
+// })
+// app.post('/saveJournal', async (req, res) => {
+//     req.session.data.jjournal[0] = req.body.journalTextBox;
+//     await setUserData(req.session.token, {jjournal: req.session.data.jjournal});
+//     res.redirect('/jjournal');
+// })
 
 app.post('/login', async (req, res) => {
-    try {
-
-        const token = await authenticateUser(req.body.__loginEmailAddress, req.body.__loginKey);
-        if (token) {
-            const data = await getUserData(token);
-            req.session.authenticated = true;
-            req.session.username = data.username;
-            req.session.data = data;
-            req.session.cookie.maxAge = logOutWhen;
-            req.session.token = token;
-            res.redirect('/main');
-            return;
-        }
-        res.redirect('/');
-    } catch (error) {
-        res.status(401).send({ error: error.message });
+    await loginUser(req, res);
+    if (req.session.authenticated) {
+        console.log(req.session.username);
+        res.redirect('/dashboard');
     }
+    // if (req.body.__loginEmailAddress !=  null) {
+    //     // console.log(req.body.__loginEmailAddress);
+    // }
+    // try {
+    //
+    //     const token = await authenticateUser(req.body.__loginEmailAddress, req.body.__loginKey);
+    //     if (token) {
+    //         const data = await getUserData(token);
+    //         req.session.authenticated = true;
+    //         req.session.username = data.username;
+    //         req.session.data = data;
+    //         req.session.cookie.maxAge = logOutWhen;
+    //         req.session.token = token;
+    //         res.redirect('/main');
+    //         return;
+    //     }
+    //     res.redirect('/');
+    // } catch (error) {
+    //     res.status(401).send({ error: error.message });
+    // }
 });
 
 

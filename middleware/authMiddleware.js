@@ -15,4 +15,12 @@ async function authMiddleware(req, res, next) {
     }
 }
 
-module.exports = authMiddleware;
+function sessionValidation(req, res, next) {
+    console.log(req.session);
+    if (req.session.authenticated) {
+        next();
+    } else
+        res.redirect('/');
+}
+
+module.exports = {authMiddleware, sessionValidation};
