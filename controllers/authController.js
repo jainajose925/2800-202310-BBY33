@@ -25,10 +25,9 @@ const saltRounds = 10;
     if (await bcrypt.compare(password, account.password)) {
         const refreshToken = await createRefreshToken(account);
         req.session.authToken = await authenticateUser(refreshToken);
-        const currentDate = new Date();
-        const dateOptions = { month: '2-digit', day: '2-digit', year: 'numeric' };
-        // console.log(dateString); // Output: "05/10/2023"
-        req.session.logDate = currentDate.toLocaleDateString(undefined, dateOptions);
+        let currdate = new Date();
+        currdate.setHours(0,0,0,0);
+        req.session.logDate = currdate;
         req.session.username = account.username;
         req.session.email = account.email;
         req.session.authenticated = true;
