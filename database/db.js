@@ -52,6 +52,7 @@ async function getUserData(userId) {
     return user.data;
 }
 
+
 async function updateName(userId, name) {
     return await userCollection.updateOne({ _id: new ObjectId(userId) }, { $set: { username: name } });
 }
@@ -59,6 +60,40 @@ async function updateName(userId, name) {
 async function updateEmail(userId, newEmail) {
     return await userCollection.updateOne({ _id: new ObjectId(userId) }, { $set: { email: newEmail } });
 }
+
+
+async function setUserToken(userId, token, expires) {
+    console.log(userId, token, expires)
+    try {
+        await userCollection.updateOne({ email: userId }, { $set: { token: token, expires: expires } });
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+
+// Will return null if no user is found or if the token is expired
+async function getUserFromToken(token) {
+    try {
+        const user = await userCollection.findOne({token: token});
+        if (user) {
+            const now = new Date();
+            if (user.expires > now) {
+                return user;
+            } else {
+                return null;
+            }
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+// Password is already hashed
+async function updateUserPassword(email, password) {
+    return await userCollection.updateOne({email: email}, { $set: { password: password } });
+}
+
 
 connectToDatabase().then();
 
@@ -69,6 +104,12 @@ module.exports = {
     updateUserData,
     getUserData,
     url,
+
     updateName,
-    updateEmail
+    updateEmail,
+
+    getUserFromToken,
+    setUserToken,
+    updateUserPassword
+
 };
