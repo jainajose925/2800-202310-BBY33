@@ -35,7 +35,7 @@ routes.use((req, res, next) => {
 });
 
 const publicRoutes = require('./public');
-const {ObjectId} = require("mongodb");
+const {resetJournal, loadJournal, isNewDay} = require("./controllers/journalController");
 app.use('/', publicRoutes);
 
 app.set('view engine', 'ejs');
@@ -48,29 +48,16 @@ app.get('/', (req, res) => {
 })
 
 app.get('/dashboard', async (req, res) => {
-    console.log(req.session);
-    /* Function Placement */
-
     if (req.session.authenticated) {
-        const __user = await findUserByEmail(req.session.email);
-        let data;
-        if (__user.data != null) {
-            data = __user.data;
-        } else {
-            data = [[req.session.logDate], [""], []];
+        /* TODO: Load and Reset Journal. */
+        let text;
+        {
+            if (await isNewDay(req))
+                text = await resetJournal(req);
+            else
+                text = await loadJournal(req);
         }
-        data[0][0] = req.session.logDate;
-        if (await isNewDay(req, res)) {
-            await updateUserData(new ObjectId(__user._id), data);
-            res.render("main", {username: req.session.username, text: ""});
-        } else {
-
-            const __entries = data[1];
-            const len = __entries.length;
-
-            await updateUserData(__user._id, data);
-            res.render("main", {username: req.session.username, text: __entries[len - 1]});
-        }
+            res.render("main", {username: req.session.username, text: text});
     } else
         res.redirect('/');
 });
@@ -93,12 +80,3 @@ app.listen(port, () => {
     console.log(`connectionURL: ${url}`);
 });
 
-
-async function isNewDay(req, res) {
-    const __user = await findUserByEmail(req.session.email);
-    const data = __user.data;
-    if (data == null)
-        return true;
-    else
-        return data[0][0] !== req.session.logDate;
-}
