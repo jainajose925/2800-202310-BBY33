@@ -54,6 +54,14 @@ app.get('/dashboard', (req, res) => {
         res.redirect('/');
 });
 
+app.get('/settings', (req, res) => {
+    console.log(req.session);
+    if (req.session.authenticated) {
+        res.render("settings");
+    } else
+        res.redirect('/');
+});
+
 app.post('/signout', (req, res) => {
     req.session.destroy();
     res.redirect('/');
