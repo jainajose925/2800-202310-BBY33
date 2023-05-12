@@ -157,7 +157,7 @@ form {
 }
 
 .pwReset {
-  transform: translateY(175%);
+  transform: translateY(130%);
   background-color: transparent;
   border: none;
   color:#4e4e4e;
@@ -188,4 +188,3 @@ form {
   opacity: 1;
   right: 0;
  }
-
