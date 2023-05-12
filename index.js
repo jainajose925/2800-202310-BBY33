@@ -8,7 +8,7 @@ const app = express();
 
 const routes = require('./routes');
 
-const {mongoStore, url, getUserData, findUserByEmail, updateUserData} = require('./database/db');
+const {mongoStore, url} = require('./database/db');
 console.log(__dirname);
 
 const port = process.env.PORT || 8080;
@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const authRoute = require('./routes/auth');
 const registryRoute = require('./routes/create');
-
+const journalRoute = require('./routes/gjournal');
 app.use(session({
     secret: process.env.NODE_SESSION_SECRET,
     store: mongoStore,
@@ -35,13 +35,14 @@ routes.use((req, res, next) => {
 });
 
 const publicRoutes = require('./public');
-const {resetJournal, loadJournal, isNewDay, getUserEntries} = require("./controllers/journalController");
+const {resetJournal, loadJournal, isNewDay, getUserEntries, saveJournal} = require("./controllers/journalController");
 app.use('/', publicRoutes);
 
 app.set('view engine', 'ejs');
 app.use('/login', authRoute);
 
 app.use('/signup', registryRoute);
+app.use('/gjournal', journalRoute);
 
 app.get('/', (req, res) => {
     res.redirect('/login');
@@ -66,14 +67,6 @@ app.get('/settings', (req, res) => {
     console.log(req.session);
     if (req.session.authenticated) {
         res.render("settings");
-    } else
-        res.redirect('/');
-});
-
-app.get('/gjournal', async (req, res) => {
-    console.log(req.session);
-    if (req.session.authenticated) {
-        res.render("journal", {req: req, entries: await getUserEntries(req)});
     } else
         res.redirect('/');
 });

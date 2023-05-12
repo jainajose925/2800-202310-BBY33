@@ -54,7 +54,12 @@
       </div>
       <div id = "gratitude">
         <h3>Gratitude</h3>
-        <textarea class="textbox"><%= text %></textarea>
+<!--        DESIGN HERE UWU -->
+        <form action="/gjournal" method="post">
+        <textarea name="gjournalTxt" class="textbox"><%= text %>
+        </textarea>
+          <input class="saveButton" type="submit" value="Save">
+        </form>
       </div>
     </div>
     <script src="/js/nav.js"></script>
