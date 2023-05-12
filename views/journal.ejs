@@ -20,7 +20,10 @@
                     date.setHours(0, 0, 0, 0);
                     if (new Date(req.session.logDate).getTime() - date.getTime() === oneDay) {
                         newDateString = "Yesterday";
-                    } else {
+                    } else if (new Date(req.session.logDate).getTime() - date.getTime() === 0) {
+                        break; // This is likely to be a end point worse case
+                    }
+                    else {
                         const dateWordArray = date.toDateString().split(' ');
                         newDateString = `${dateWordArray[1]} ${dateWordArray[2]}, ${dateWordArray[3]}`; // Reconstruct the string without the day of the week
                     }
