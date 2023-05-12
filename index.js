@@ -35,7 +35,7 @@ routes.use((req, res, next) => {
 });
 
 const publicRoutes = require('./public');
-const {resetJournal, loadJournal, isNewDay} = require("./controllers/journalController");
+const {resetJournal, loadJournal, isNewDay, getUserEntries} = require("./controllers/journalController");
 app.use('/', publicRoutes);
 
 app.set('view engine', 'ejs');
@@ -70,10 +70,10 @@ app.get('/settings', (req, res) => {
         res.redirect('/');
 });
 
-app.get('/gjournal', (req, res) => {
+app.get('/gjournal', async (req, res) => {
     console.log(req.session);
     if (req.session.authenticated) {
-        res.render("journal");
+        res.render("journal", {req: req, entries: await getUserEntries(req)});
     } else
         res.redirect('/');
 });
