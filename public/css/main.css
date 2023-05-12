@@ -290,3 +290,16 @@ h3 {
   margin-left: 10;
   flex:3%
 }
+
+.saveButton {
+  /*justify-content: center;*/
+  /*position: absolute;*/
+  display: flex;
+  align-items: center;
+  float: unset;
+  margin-left: 35px;
+  width: 143px;
+  height: 57px;
+  left: calc(50% - 143px/2 - 4.5px);
+  top: 740px;
+}

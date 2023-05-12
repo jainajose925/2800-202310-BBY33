@@ -1,0 +1,18 @@
+<%- include("templates/header") %>
+<link rel="stylesheet" type="text/css" href="/css/forgotpw.css">
+
+</head>
+<body>
+
+  <div class="container">
+    <h1>Forgot Password?</h1>
+    <h4>No Problem!</h4>
+        <form action="resetPassword" method="post">
+          <div class="form-group">
+            <input name="email" type="email" class="form-control" placeholder="Enter your email..." required>
+          </div>
+          <button id="reset" type="submit">Reset Your Password</button>
+        </form>
+    <form id="back" action="/login" method="get"><button type="submit">Back to Login</button></form>
+  </div>
+  <%- include("templates/footer") %>
