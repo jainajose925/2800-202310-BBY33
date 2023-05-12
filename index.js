@@ -81,7 +81,15 @@ app.get('/gjournal', async (req, res) => {
 app.post('/signout', (req, res) => {
     req.session.destroy();
     res.redirect('/');
-})
+});
+
+app.get('/chatbot', (req, res) => {
+    console.log(req.session);
+    if (req.session.authenticated) {
+        res.render("chatbot");
+    } else
+        res.redirect('/');
+});
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
