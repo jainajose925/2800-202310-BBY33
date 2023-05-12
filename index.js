@@ -108,6 +108,14 @@ app.get('/settings', (req, res) => {
 });
 
 
+app.get('/account', (req, res) => {
+    console.log(req.session);
+    if (req.session.authenticated) {
+        res.render("account", {req: req});
+    } else
+        res.redirect('/');
+});
+
 app.get('/gjournal', async (req, res) => {
     console.log(req.session);
     if (req.session.authenticated) {
@@ -115,6 +123,7 @@ app.get('/gjournal', async (req, res) => {
     } else
         res.redirect('/');
 });
+
 
 async function generateToken(expiration, account) {
     const token = await crypto.randomBytes(20).toString('hex');
@@ -194,6 +203,7 @@ app.post('/updateuser/', async (req, res) => {
         }
     }
 });
+
 
 
 app.post('/signout', (req, res) => {

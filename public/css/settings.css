@@ -54,6 +54,11 @@ button {
   background: none;
 }
 
+a {
+  text-decoration: none;
+  color: #4e4e4e;
+}
+
 button {
   --primary-color: #4e4e4e;
   --hovered-color: #f6f4f4;
