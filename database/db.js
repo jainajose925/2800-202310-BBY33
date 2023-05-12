@@ -36,7 +36,7 @@ async function connectToDatabase() {
 }
 
 async function findUserByEmail(email) {
-    return await userCollection.findOne({ email });
+    return await userCollection.findOne({ email: email });
 }
 
 async function insertUser(user) {
@@ -44,7 +44,7 @@ async function insertUser(user) {
 }
 
 async function updateUserData(userId, data) {
-    return await userCollection.updateOne({ _id: ObjectId(userId) }, { $set: { data: data } });
+    return await userCollection.updateOne({ _id: new ObjectId(userId) }, { $set: { data: data } });
 }
 
 async function getUserData(userId) {
