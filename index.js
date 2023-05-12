@@ -47,6 +47,10 @@ app.get('/', (req, res) => {
     res.redirect('/login');
 })
 
+app.get('/forgotpw', (req, res) => {
+    res.render("forgotpw");
+});
+
 app.get('/dashboard', async (req, res) => {
     if (req.session.authenticated) {
         /* TODO: Load and Reset Journal. */
