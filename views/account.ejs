@@ -11,11 +11,11 @@
     <div class="container">
         <h1>Your Account</h1>
         <hr>
-        <p><h3>Username:</h3> </p>
+        <p><h3>Username:</h3><%= req.session.username%> </p>
         <hr>
-        <p><h3>Email:</h3> </p>
+        <p><h3>Email:</h3><%= req.session.email %> </p>
         <hr>
-        <p><h3>Your Mental Health Goal:</h3><br> </p>
+        <p><h3>Your Mental Health Goal:</h3><%= req.session.goal %><br> </p>
         <hr>
     </div>
 <%- include("templates/footer") %>

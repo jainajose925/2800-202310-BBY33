@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
     if (req.session.authenticated)
         res.redirect('/dashboard');
     else
-        res.render('signup');
+        res.redirect('/');
 })
 
 module.exports = router;
