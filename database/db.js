@@ -76,10 +76,13 @@ async function setUserToken(userId, token, expires) {
 async function getUserFromToken(token) {
     try {
         const user = await userCollection.findOne({token: token});
-        if (user.expires > Date.now()) {
-            return user;
-        } else {
-            return null;
+        if (user) {
+            const now = new Date();
+            if (user.expires > now) {
+                return user;
+            } else {
+                return null;
+            }
         }
     } catch (err) {
         console.error(err);
@@ -87,20 +90,9 @@ async function getUserFromToken(token) {
 }
 
 // Password is already hashed
-async function resetUserPassword(email, password) {
-    try {
-        const user = findUserByEmail(email);
-        if (user) {
-            await userCollection.updateOne({email: email}, {$set: {password: password}});
-            return true;
-        } else {
-            return false;
-        }
-    } catch (err) {
-        console.error(err);
-    }
+async function updateUserPassword(email, password) {
+    return await userCollection.updateOne({email: email}, { $set: { password: password } });
 }
-
 
 
 connectToDatabase().then();
@@ -117,6 +109,7 @@ module.exports = {
     updateEmail,
 
     getUserFromToken,
-    setUserToken
+    setUserToken,
+    updateUserPassword
 
 };

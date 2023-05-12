@@ -22,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const authRoute = require('./routes/auth');
 const registryRoute = require('./routes/create');
+const { resetPassword } = require('./controllers/authController');
 
 const journalRoute = require('./routes/gjournal');
 
@@ -52,13 +53,12 @@ console.log(oauth2Client);
 let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-    auth: {
         type: 'OAuth2',
         user: oauth2Client.user,
         clientId: oauth2Client.clientId,
         clientSecret: oauth2Client.clientSecret,
         refreshToken: oauth2Client.refreshToken
-    }
+    },
 });
 
 routes.use((req, res, next) => {
@@ -78,7 +78,7 @@ app.use('/gjournal', journalRoute);
 
 app.get('/', (req, res) => {
     res.redirect('/login');
-})
+});
 
 app.get('/forgotpw', (req, res) => {
     res.render("forgotpw");
@@ -173,7 +173,24 @@ app.get('/pwreset/:token', async (req, res) => {
             res.redirect('/resetpassword/expired');
         } else {
             // token is valid
-            res.render('resetuserpassword', {token: token});
+            res.render('reset_password', {token: token});
+        }
+    }
+});
+
+app.post('/updateuser/', async (req, res) => {
+    const token = req.body.token;
+    const password = req.body.password;
+    const user = await getUserFromToken(token);
+    if (user) {
+        if (Date.now() > user.tokenExpiration) {
+            // token expired
+            res.redirect('/resetpassword/complete/expired');
+        } else {
+            // token is valid
+
+            await resetPassword(user.email, password);
+            res.redirect('/resetpassword/complete/success');
         }
     }
 });

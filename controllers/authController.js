@@ -1,7 +1,7 @@
 const joi = require('joi');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { findUserByEmail, insertUser } = require('../database/db');
+const { findUserByEmail, insertUser, updateUserPassword} = require('../database/db');
 const saltRounds = 10;
 
  async function loginUser(req, res) {
@@ -82,6 +82,16 @@ async function registerUser(req, res) {
     res.redirect('/');
 }
 
+// Password is not hashed
+async function resetPassword(userEmail, password) {
+     console.log(userEmail, password)
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    await updateUserPassword(userEmail, hashedPassword);
+
+}
+
+
+
 async function createRefreshToken(user) {
     return jwt.sign({username: user.username, email: user.email}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '7d'});
 }
@@ -109,4 +119,5 @@ module.exports = {
     createRefreshToken,
     authenticateUser,
     validateAccessToken,
+    resetPassword
 };
