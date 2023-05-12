@@ -52,6 +52,14 @@ async function getUserData(userId) {
     return user.data;
 }
 
+async function updateName(userId, name) {
+    return await userCollection.updateOne({ _id: new ObjectId(userId) }, { $set: { username: name } });
+}
+
+async function updateEmail(userId, newEmail) {
+    return await userCollection.updateOne({ _id: new ObjectId(userId) }, { $set: { email: newEmail } });
+}
+
 connectToDatabase().then();
 
 module.exports = {
@@ -60,5 +68,7 @@ module.exports = {
     insertUser,
     updateUserData,
     getUserData,
-    url
+    url,
+    updateName,
+    updateEmail
 };
