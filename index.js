@@ -83,6 +83,14 @@ app.get('/settings', (req, res) => {
         res.redirect('/');
 });
 
+app.get('/gjournal', (req, res) => {
+    console.log(req.session);
+    if (req.session.authenticated) {
+        res.render("journal");
+    } else
+        res.redirect('/');
+});
+
 app.post('/signout', (req, res) => {
     req.session.destroy();
     res.redirect('/');

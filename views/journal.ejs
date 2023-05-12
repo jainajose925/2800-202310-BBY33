@@ -1,12 +1,17 @@
 <%- include("templates/header") %>
-    </head>
+    <link rel="stylesheet" type="text/css" href="/css/nav.css">
+    <link rel="stylesheet" type="text/css" href="/css/journal.css">
+</head>
 <body>
-<h2>Journal</h2>
+    <%- include("templates/nav") %>
+    <div class="container">
+        <h2>Your Gratitude Journal</h2>
+        <ul id="entries">
+            <!--PUT FOR LOOP HERE-->
+        </ul>
+        </div>
+    </div>
 
-    <form action="/saveJournal" method="post">
-        <label>
-            <input name="journalTextBox" type="text" placeholder="Type away" value="<%= journalContent %>">
-        </label>
-        <button>Save</button>
-    </form>
+
+    
 <%- include("templates/footer") %>
