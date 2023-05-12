@@ -31,6 +31,7 @@ const saltRounds = 10;
         req.session.username = account.username;
         req.session.email = account.email;
         req.session.authenticated = true;
+        req.session.goal = account.goal;
         res.redirect('/dashboard');
         // return {account, password};
         return;
@@ -46,7 +47,7 @@ const saltRounds = 10;
 }
 
 async function registerUser(req, res) {
-    let {email, username, password, confirmKey} = req.body;
+    let {email, username, password, confirmKey, goal} = req.body;
     if (password !== confirmKey) {
         /* TODO: HTML Design */
         res.redirect('/signUp?error=' + "passwordDoesNotMatch");
@@ -75,7 +76,8 @@ async function registerUser(req, res) {
     const newUser = {
         username,
         email,
-        password: hashedPassword
+        password: hashedPassword,
+        goal: goal
     };
 
     await insertUser(newUser);

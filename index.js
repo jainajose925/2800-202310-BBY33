@@ -78,7 +78,7 @@ app.get('/settings', (req, res) => {
 app.get('/account', (req, res) => {
     console.log(req.session);
     if (req.session.authenticated) {
-        res.render("account");
+        res.render("account", {req: req});
     } else
         res.redirect('/');
 });

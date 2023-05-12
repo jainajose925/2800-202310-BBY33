@@ -37,7 +37,7 @@ function dataInstanceOf(__user, req) {
         tempData[0][0] = new Date(req.session.logDate).toLocaleDateString();
         return tempData;
     }
-    return [[new Date(req.session.logDate).toLocaleDateString()], [""], []];
+    return [[new Date(req.session.logDate).toLocaleDateString()], [""], [new Date(req.session.logDate).toLocaleDateString()]];
 }
 
 async function getUserEntries(req) {
