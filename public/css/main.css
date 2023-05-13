@@ -1,0 +1,305 @@
+.container {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  width: 80%;
+  height: auto;
+  padding: 15px;
+}
+
+@media (min-width: 800px) {
+  .container {
+    width: 60%;
+  }
+}
+
+#chat {
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#chat-title {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  background-color: #D3B2DA;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  border: solid 3px #4e4e4e;
+  border-radius: 10px;
+}
+
+#moodLogger {
+  width: 80%;
+  height: 110px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  background-color: #B2EEB1;
+  box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.7);
+  border: solid #4e4e4e;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  font-size: large;
+  transition: height 0.3s ease-in-out;
+}
+
+#moodLogger.expanded {
+  height: 150px;
+}
+
+#chat-content {
+  margin:auto;
+  height: 350px;
+  width: 100%;
+  background-color: #F8E3CA;
+  border: solid 3px #4e4e4e;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+#moodButtons {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+label {
+  display: block;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+input[type="checkbox"] + label {
+  display: block;
+}
+
+.moodButton {
+  margin-right: 5px;
+}
+
+p {
+  margin-bottom: 5px;
+}
+
+input[type="checkbox"] {
+  display: inline-block;
+  -webkit-appearance: none;
+  appearance: none;
+  border: solid 0.15em #4e4e4e;
+  background-color: #F6F4F4;
+  width: 25px;
+  height: 25px;
+  border-radius: 15px;
+  margin: 0 10px;
+  cursor: pointer;
+  margin: 0 1.5rem;
+  display: grid;
+  place-content: center;
+  transform: translateY(-0.075em);
+}
+
+#happyButton::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border-radius: 10px;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em #ADAE5B;
+}
+
+#happyButton:hover{
+  box-shadow: 0 5px 5px 0 rgba(173, 174, 91, 0.7);
+}
+
+#happyButton:checked::before {
+  transform: scale(1);
+}
+
+#sadButton::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border-radius: 10px;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em #7B9FD6;
+}
+
+#sadButton:hover{
+  box-shadow: 0 5px 5px 0 rgba(123, 159, 214, 0.7);
+}
+
+#sadButton:checked::before {
+  transform: scale(1);
+}
+
+#angryButton::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border-radius: 10px;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em #FA7F7F;
+}
+
+#angryButton:checked::before {
+  transform: scale(1);
+}
+
+#angryButton:hover{
+  box-shadow: 0 5px 5px 0 rgba(250, 127, 127, 0.7);
+}
+
+#anxiousButton::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border-radius: 10px;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em #3E3F41;
+}
+
+#anxiousButton:hover{
+  box-shadow: 0 5px 5px 0 rgba(62, 63, 65, 0.7);
+}
+
+#anxiousButton:checked::before {
+  transform: scale(1);
+}
+
+#tiredButton::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border-radius: 10px;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em #B2BAB1;
+}
+
+#tiredButton:hover{
+  box-shadow: 0 5px 5px 0 rgba(178, 186, 177, 0.7);
+}
+
+
+#tiredButton:checked::before {
+  transform: scale(1);
+}
+
+#submitMood {
+  opacity: 0;
+  cursor: auto;
+  width: 0px;
+  height: 0px;
+}
+
+#submitMood.expanded {
+  width: 85px;
+  height: 43px;
+  border-radius: 10px;
+  background-color: #85b684;
+  box-shadow: 0 8px 14px 0 rgba(0, 0, 0, 0.4);
+  opacity: 1;
+  transition: opacity ease-in-out .5s;
+}
+
+#submitMood.expanded:hover {
+  box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.4);
+}
+
+#greeting {
+  flex: 65%;
+  background-color: #B2EEB1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid #4e4e4e;
+  border-radius:10px;
+  font-weight: 650;
+  height: 50px;
+}
+
+#chat-form, #chat-form-input > input[type="text"] {
+  appearance: none;
+  width: 100%;
+  height: 40px;
+  border: solid 2px #4e4e4e;
+  border-radius: 5px;
+  background-color: #DDC0E7;
+}
+
+#gratitude {
+  height: 300px;
+  background-color: #D3B2DA;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25px;
+  border: solid #4e4e4e;
+}
+
+h3 {
+  font-size: 2em;
+  font-weight: 800;
+  color: #4e4e4e;
+}
+
+.textbox {
+  background-color: #F6F4F4;
+  padding: 25px;
+  border-radius: 25px;
+  width: 90%;
+  height: 90%; 
+}
+
+#chat-form {
+  height: 50px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+}
+
+#chat-form-input {
+  display: flex;
+  align-items: center;
+}
+
+#usermsg {
+  flex: 100%;
+  height: 25px;
+}
+
+#send {
+  border:none;
+  background: none;
+  margin-left: 10;
+  flex:3%
+}
+
+.saveButton {
+  /*justify-content: center;*/
+  /*position: absolute;*/
+  display: flex;
+  align-items: center;
+  float: unset;
+  margin-left: 35px;
+  width: 143px;
+  height: 57px;
+  left: calc(50% - 143px/2 - 4.5px);
+  top: 740px;
+}

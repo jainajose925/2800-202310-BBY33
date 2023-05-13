@@ -1,0 +1,68 @@
+<%- include("templates/header") %>
+
+<link rel="stylesheet" type="text/css" href="/css/nav.css">
+<link rel="stylesheet" type="text/css" href="/css/main.css">
+</head>
+  <body>
+    <%-include("templates/nav") %>
+    <div class="container">
+      <div id="greeting">
+        <h2>Hello, <%= username %>!</h2>
+      </div>
+      <div id="chat">
+        <div id="chat-title">
+          <h2>Chat!</h2>
+        </div>
+        <form id="chat-content">
+          <div id = "moodLogger">
+            <p>How are you feeling?</p>
+            <div id="moodButtons">
+              <label for="happyButton">
+                <input type="checkbox" id="happyButton" class="moodButton" value="happy">
+                Happy
+              </label>
+              <br>
+              <label for="sadButton">
+                <input type="checkbox" id="sadButton" class="moodButton" value="sad">
+                Sad
+              </label>
+              <br>
+              <label for="angryButton">
+                <input type="checkbox" id="angryButton" class="moodButton" value="angry">
+                Angry
+              </label>
+              <br>
+              <label for="anxiousButton">
+                <input type="checkbox" id="anxiousButton" class="moodButton" value="anxious">
+                Anxious
+              </label>
+              <br>
+              <label for="tiredButton">
+                <input type="checkbox" id="tiredButton" class="moodButton" value="tired">
+                Tired
+              </label>
+            </div>
+            <button id="submitMood">Submit</button>
+          </div>
+        </form>
+        <div id="chat-form">
+          <form id="chat-form-input">
+            <input type="text" id="usermsg" placeholder="Start a conversation...">
+            <button type="submit" id="send"><img src="/img/send.svg"></button>
+          </form>
+        </div>
+      </div>
+      <div id = "gratitude">
+        <h3>Gratitude</h3>
+<!--        DESIGN HERE UWU -->
+        <form action="/gjournal" method="post">
+        <textarea name="gjournalTxt" class="textbox"><%= text %>
+        </textarea>
+          <input class="saveButton" type="submit" value="Save">
+        </form>
+      </div>
+    </div>
+    <script src="/js/nav.js"></script>
+    <script src="/js/main.js"></script>
+<%- include("templates/footer") %>
+
