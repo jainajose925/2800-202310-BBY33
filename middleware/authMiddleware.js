@@ -1,3 +1,4 @@
+// PlaceHolder for main merge issue.
 const { validateAccessToken } = require('../controllers/authController');
 
 async function authMiddleware(req, res, next) {

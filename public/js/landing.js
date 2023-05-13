@@ -1,3 +1,4 @@
+// PlaceHolder for main merge issue.
 const card = document.querySelector('.flip-card');
 const flipButton = document.querySelector('.flip-btn');
 const backButton = document.querySelector('.back-btn');

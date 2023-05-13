@@ -1,7 +1,7 @@
+// PlaceHolder for main merge issue.
 const { setUserData, getUserData } = require('../database/db');
 const { validateAccessToken } = require('./authController');
 
-// Missing from main branch.
 async function setUserDataController(req, res) {
     try {
         const authToken = req.headers.authorization;
