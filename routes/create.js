@@ -1,3 +1,4 @@
+// PlaceHolder for main merge issue.
 const express = require('express');
 const router = express.Router();
 const {registerUser} = require('../controllers/authController');

@@ -1,3 +1,4 @@
+// PlaceHolder for main merge issue.
 const form = document.getElementById("moodForm");
 const radios = form.elements.mood;
 

@@ -1,3 +1,4 @@
+// PlaceHolder for main merge issue.
 const moodButtons = document.querySelectorAll('.moodButton');
 const submitButton = document.querySelector('#submitMood');
 

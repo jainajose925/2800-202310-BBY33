@@ -1,3 +1,4 @@
+// PlaceHolder for main merge issue.
 const express = require('express');
 const {getUserEntries, saveJournal} = require("../controllers/journalController");
 const router = express.Router();

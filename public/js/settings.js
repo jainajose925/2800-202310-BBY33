@@ -1,3 +1,4 @@
+// PlaceHolder for main merge issue.
 const buttons = document.querySelectorAll(".op");
 const links = ["/account", "/contact", "/about", "/help"];
 
