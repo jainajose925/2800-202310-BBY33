@@ -2,38 +2,54 @@
 <%- include("templates/header") %>
     <link rel="stylesheet" type="text/css" href="/css/nav.css">
     <link rel="stylesheet" type="text/css" href="/css/journal.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
 </head>
 <body>
     <%- include("templates/nav") %>
     <div class="container">
-        <h2>Your Gratitude Journal</h2>
+        <h2>Entry History</h2>
         <ul id="entries">
             <!--PUT FOR LOOP HERE-->
-            <% let i = 0; %>
-            <% for (i = 0; i < entries[1].length; i++) { %>
-                <%
-                    let newDateString;
-                    const oneDay = 24 * 60 * 60 * 1000; // one day in milliseconds
-                    /* The Journal Entry's Date. */
-                    const dateParts = entries[1][i].split('/');
-                    let date = new Date(parseInt(dateParts[2]), parseInt(dateParts[0]) - 1 /* Month values in Date objects are 0-based. (0-11) */,
-                            parseInt(dateParts[1]));
-                    date.setHours(0, 0, 0, 0);
-                    if (new Date(req.session.logDate).getTime() - date.getTime() === oneDay) {
-                        newDateString = "Yesterday";
-                    } else if (new Date(req.session.logDate).getTime() - date.getTime() === 0) {
-                        break; // This is likely to be a end point worse case
-                    }
-                    else {
-                        const dateWordArray = date.toDateString().split(' ');
-                        newDateString = `${dateWordArray[1]} ${dateWordArray[2]}, ${dateWordArray[3]}`; // Reconstruct the string without the day of the week
-                    }
-                %>
+            <% for (let i = 0; i < entries[1].length; i++) { %>
+            <%
+                let newDateString;
+                const oneDay = 24 * 60 * 60 * 1000; // one day in milliseconds
+                /* The Journal Entry's Date. */
+                const dateParts = entries[1][i].split('-');
+                let date = new Date(parseInt(dateParts[0]), parseInt(dateParts[1]) - 1 /* Month values in Date objects are 0-based. (0-11) */,
+                parseInt(dateParts[2]));
+                date.setHours(0, 0, 0, 0);
+
+                if (new Date(req.session.logDate).getTime() - date.getTime() === oneDay) {
+                    newDateString = "Yesterday";
+                }
+                else if (new Date(req.session.logDate).getTime() - date.getTime() === 0) {
+                    break; // This is likely to be a end point worse case
+                }
+                else {
+                    const dateWordArray = date.toDateString().split(' ');
+                    newDateString = `${dateWordArray[1]} ${dateWordArray[2]}, ${dateWordArray[3]}`; // Reconstruct the string without the day of the week
+                }
+            %>
                 <%- include("templates/entries", {date: newDateString, text: entries[0][i]}) %>
             <% } %>
+
         </ul>
+        <div id="pagination" class="">
+                <%- include("templates/pagination", {currPage: currPage, numPages: numPages})%>
+        </div>
         </div>
     </div>
+    <script>
+        let entryList = '<%= entries %>';
+        // function showContents() {
+        //
+        // }
+        // let showContents =
+    </script>
+    <script src="/js/journal.js"></script>
 
 
     
