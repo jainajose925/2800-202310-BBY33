@@ -68,6 +68,16 @@ async function isPreviousEntryToday(req, __entries) {
     console.log(__entries[1][__entries[0].length - 1]);
     return new Date(req.session.logDate).toLocaleDateString() === __entries[1][__entries[1].length - 1];
 }
+
+function getEnd(currPage) {
+    const numPerPage = 4;
+    return ((currPage - 1) * numPerPage) + numPerPage;
+}
+
+function getStart(currPage) {
+    const numPerPage = 4;
+    return ((currPage - 1) * numPerPage) + numPerPage;
+}
 /*
     Helper Function
     __list is [[entriestxt], [entrieslogTime]]

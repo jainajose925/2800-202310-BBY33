@@ -2,6 +2,9 @@
 <%- include("templates/header") %>
     <link rel="stylesheet" type="text/css" href="/css/nav.css">
     <link rel="stylesheet" type="text/css" href="/css/journal.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
 </head>
 <body>
     <%- include("templates/nav") %>
@@ -15,9 +18,9 @@
                     let newDateString;
                     const oneDay = 24 * 60 * 60 * 1000; // one day in milliseconds
                     /* The Journal Entry's Date. */
-                    const dateParts = entries[1][i].split('/');
-                    let date = new Date(parseInt(dateParts[2]), parseInt(dateParts[0]) - 1 /* Month values in Date objects are 0-based. (0-11) */,
-                            parseInt(dateParts[1]));
+                    const dateParts = entries[1][i].split('-');
+                    let date = new Date(parseInt(dateParts[0]), parseInt(dateParts[1]) - 1 /* Month values in Date objects are 0-based. (0-11) */,
+                            parseInt(dateParts[2]));
                     date.setHours(0, 0, 0, 0);
                     if (new Date(req.session.logDate).getTime() - date.getTime() === oneDay) {
                         newDateString = "Yesterday";
@@ -31,9 +34,14 @@
                 %>
                 <%- include("templates/entries", {date: newDateString, text: entries[0][i]}) %>
             <% } %>
+
         </ul>
+        <div id="pagination">
+
+        </div>
         </div>
     </div>
+    <script src="/js/journal.js"></script>
 
 
     
