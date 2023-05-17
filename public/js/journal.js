@@ -3,7 +3,10 @@ let numPages = 0;
 const numPageBtn = 3;
 
 const setup = async () => {
-    $('#entries').append()
+    // let v =
+    console.log(entryList);
+    showContents();
+    // $('#entries').append()
     // $('#date').append('<h1>hello</h1>');
     // showPage(1);
 }
