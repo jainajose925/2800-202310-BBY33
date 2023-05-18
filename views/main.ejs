@@ -14,36 +14,36 @@
         <div id="chat-title">
           <h2>Chat!</h2>
         </div>
-        <form id="chat-content">
+        <form id="chat-content" action="/mt" method="post">
           <div id = "moodLogger">
             <p>How are you feeling?</p>
             <div id="moodButtons">
               <label for="happyButton">
-                <input type="checkbox" id="happyButton" class="moodButton" value="happy">
+                <input name="ch1" type="checkbox" id="happyButton" class="moodButton" value="happy">
                 Happy
               </label>
               <br>
               <label for="sadButton">
-                <input type="checkbox" id="sadButton" class="moodButton" value="sad">
+                <input name="ch2" type="checkbox" id="sadButton" class="moodButton" value="sad">
                 Sad
               </label>
               <br>
               <label for="angryButton">
-                <input type="checkbox" id="angryButton" class="moodButton" value="angry">
+                <input name="ch3" type="checkbox" id="angryButton" class="moodButton" value="angry">
                 Angry
               </label>
               <br>
               <label for="anxiousButton">
-                <input type="checkbox" id="anxiousButton" class="moodButton" value="anxious">
+                <input name="ch4" type="checkbox" id="anxiousButton" class="moodButton" value="anxious">
                 Anxious
               </label>
               <br>
               <label for="tiredButton">
-                <input type="checkbox" id="tiredButton" class="moodButton" value="tired">
+                <input name="ch5" type="checkbox" id="tiredButton" class="moodButton" value="tired">
                 Tired
               </label>
             </div>
-            <button id="submitMood">Submit</button>
+            <button id="submitMood" value="Sup">Submit</button>
           </div>
         </form>
         <div id="chat-form">

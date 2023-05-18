@@ -1,0 +1,55 @@
+<!--// PlaceHolder for main merge issue.-->
+<%- include("templates/header") %>
+
+<link rel="stylesheet" type="text/css" href="/css/nav.css">
+<!--<link rel="stylesheet" type="text/css" href="/css/main.css">-->
+<link rel="stylesheet" type="text/css" href="/css/chatbot.css">
+</head>
+<body>
+<%-include("templates/nav") %>
+<div class="container">
+    <div id="chat">
+        <div id="chat-title">
+            <h2>Chat!</h2>
+        </div>
+        <form id="chat-content" class="overflow-auto">
+            <% for (let i = 0; i < botTxtArray.length; i++) { %>
+            <% if (userTxtArray.length >= botTxtArray.length) { %>
+                <p class="userMessage">
+                    <%= userTxtArray[i] %>
+                    <span><br>You <%= (new Date()).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+                        %></span>
+                </p>
+                <p class="botMessage">
+                    <%= botTxtArray[i] %>
+                    <span><br>Bot  <%= (new Date()).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+                        %></span>
+                </p>
+            <% } else if (userTxtArray.length < botTxtArray.length) { %>
+                    <p class="botMessage">
+                        <%= botTxtArray[i] %>
+                        <span><br>Bot  <%= (new Date()).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+                            %></span>
+                    </p>
+                    <% if (userTxtArray[i] != null) { %>
+                    <p class="userMessage">
+                        <%= userTxtArray[i] %>
+                        <span><br>You  <%= (new Date()).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+                            %></span>
+                    </p>
+                    <% } %>
+                <% }%>
+            <% } %>
+        </form>
+        <div id="chat-form">
+            <form id="chat-form-input" method="post" action="/chatbot">
+                <input type="text" id="usermsg" name="userTxt" placeholder="Start a conversation...">
+                <button type="submit" id="send"><img src="/img/send.svg"></button>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="/js/nav.js"></script>
+<script src="/js/main.js"></script>
+<%- include("templates/footer") %>
+
