@@ -31,7 +31,7 @@ body {
     flex-direction: column;
     }
 
-    button[type="submit"] {
+    nav button[type="submit"] {
       width: 400px;
     }
  }
@@ -91,7 +91,7 @@ body {
 }
 */
 
-button[type="submit"]{
+nav button[type="submit"]{
   padding: 5px;
   border: none;
   border-radius: 3px;
@@ -103,7 +103,7 @@ button[type="submit"]{
     background-position 0.2s calc(0.2s - var(--t, 0s));
 }
 
-button[type="submit"]:hover {
+nav button[type="submit"]:hover {
   color: #F6F4F4;
   --p: 100%;
   --t: 0.3s;
