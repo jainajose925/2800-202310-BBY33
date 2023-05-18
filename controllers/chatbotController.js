@@ -1,6 +1,7 @@
 const { ChatGPTAPI } = require('chatgpt');
 const systemMessages = require('../systemMessages.json');
 const db = require('../database/db');
+const env = require('../env.js');
 
 let sessions = {};
 
@@ -18,7 +19,7 @@ async function startSession(userId, userMood) {
 async function startSessionInfo(userId, userName, userMood, userLocal, userInfo) {
     sessions[userId] = {};
     sessions[userId].instance = new ChatGPTAPI({
-        apiKey: process.env.CHATGPT_API_KEY,
+        apiKey: env.CHATGPT_API_KEY,
         completionParams: {
             maxTokens: 150,
             model: "gpt-3.5-turbo"
