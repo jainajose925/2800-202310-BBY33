@@ -17,4 +17,23 @@ moodButtons.forEach((button) => {
   });
 });
 
+function enableEdit() {
+  var editBtn = document.querySelector(".editButton");
+  var textBox = document.querySelector(".textbox");
+  var saveBtn = document.querySelector(".saveButton");
+
+  textBox.disabled = false;
+  saveBtn.classList.remove("hidden");
+  editBtn.style.display = "none";
+}
+
+function saveChanges() {
+  var editBtn = document.querySelector(".editButton");
+  var textBox = document.querySelector(".textbox");
+  var saveBtn = document.querySelector(".saveButton");
+
+  textBox.disabled = true;
+  saveBtn.classList.add("hidden");
+  editBtn.style.display = "block";
+}
 
