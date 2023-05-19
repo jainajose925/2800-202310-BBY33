@@ -82,6 +82,8 @@ app.use('/chatbot', chatRoute);
 
 
 app.get('/', (req, res) => {
+
+    // console.log((new Date()).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }));
     res.redirect('/login');
 });
 

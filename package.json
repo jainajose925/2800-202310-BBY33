@@ -19,6 +19,7 @@
   "homepage": "https://github.com/jainajose925/2800-202310-BBY33#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "chatgpt": "^5.2.4",
     "connect-mongo": "^5.0.0",
     "dotenv": "^16.0.3",
     "ejs": "^3.1.9",

@@ -1,24 +1,24 @@
 const express = require('express');
-const {sendMessage} = require("../middleware/chatMiddleware");
+// const {sendMessage} = require("../middleware/chatMiddleware");
 const {recieveMessage} = require("../controllers/chatController");
+const {startSession, sendMessage, getUserHistory, getBotHistory} = require("../database/openAPI");
+const {findUserByEmail} = require("../database/db");
 const router = express.Router();
 
-router.post('/', sendMessage, recieveMessage);
+router.post('/', async (req, res) => {
+    const user = await findUserByEmail(req.session.email)
+    await sendMessage(user._id, req.body.userTxt);
+
+    res.redirect('/chatbot');
+});
 router.get('/', async (req, res) => {
     // console.log(req.session);
     if (req.session.authenticated) {
-        if (req.session.userTxt == null || req.session.aiResponses == null) {
-            req.session.userTxt = [];
-            req.session.aiResponses = [];
-        }
-        if (req.session.moods != null)
-            await recieveMessage(req, res);
-        else {
-
-        console.log(req.session.aiResponses);
-        console.log(req.session.userTxt);
-        res.render("chatbot2", {userTxtArray: req.session.userTxt, botTxtArray: req.session.aiResponses});
-        }
+        await startSession(req);
+        const __user = await findUserByEmail(req.session.email);
+        console.log(await getUserHistory(__user._id));
+        res.render("chatbot2", {userTxtArray: await getUserHistory(__user._id), botTxtArray: await getBotHistory(__user._id)});
+        // }
     } else
         res.redirect('/');
 });
