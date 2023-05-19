@@ -3,7 +3,7 @@ const {findUserByEmail, updateUserData} = require("../database/db");
 const {ObjectId} = require("mongodb");
 const {func} = require("joi");
 
-const numPerPage = 2;
+const numPerPage = 4;
 async function loadJournal(req) {
     const __user = await findUserByEmail(req.session.email);
     let data = dataInstanceOf(__user, req);

@@ -1,15 +1,16 @@
 const express = require('express');
 // const {sendMessage} = require("../middleware/chatMiddleware");
-const {recieveMessage, saveBotMessage} = require("../controllers/chatController");
+const {saveBotMessage} = require("../controllers/chatController");
 const {startSession, sendMessage, getUserHistory, getBotHistory} = require("../database/openAPI");
 const {findUserByEmail} = require("../database/db");
 const router = express.Router();
 
 router.post('/', async (req, res) => {
     const user = await findUserByEmail(req.session.email)
-    await sendMessage(user._id, req.body.userTxt);
-
-    res.redirect('/chatbot');
+    if (await sendMessage(user._id, req.body.userTxt))
+        res.redirect("/letsplay");
+    else
+        res.redirect('/chatbot');
 });
 
 router.post('/:method', async (req, res) => {

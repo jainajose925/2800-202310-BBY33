@@ -12,7 +12,7 @@ botParagraphs.forEach(function (ele) {
     ele.addEventListener("mousedown", function() {
         holdTimeout = setTimeout(function() {
             // Perform action when the button is held for a certain duration
-            ele.setAttribute("style", "background-color: blue");
+            ele.setAttribute("style", "background-color: #c1b1c3");
             action[i].removeAttribute("style");
             // console.log(ele.innerText);
             // console.log("Button held");
