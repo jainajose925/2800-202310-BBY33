@@ -60,3 +60,11 @@ nav button[type="submit"]:hover {
   --p: 100%;
   --t: 0.3s;
 }
+
+.eg {
+  align-self: end;
+  width: 5px;
+  float: right;
+  opacity: 17%;
+  cursor: pointer;
+}

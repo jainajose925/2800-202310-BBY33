@@ -1,29 +1,39 @@
 <% if (currPage > 1) {%>
-    <form class="col-sm" method="get" action="/gjournal/1">
-        <input type="submit" value="First">
-    </form>
-    <form class="col-sm" method="get" action="/gjournal/<%= currPage - 1 %>">
-        <input type="submit" value="Prev">
-    </form>
+<!--    <form class="col-sm" method="get" action="/gjournal/1">-->
+        <input class="col-sm jpag" type="submit" value="First" moveTo="1">
+<!--    </form>-->
+<!--    <form class="col-sm" method="get" action="/gjournal/<%= currPage - 1 %>">-->
+        <input class="col-sm jpag" type="submit" value="Prev" moveTo="<%= currPage - 1 %>">
+<!--    </form>-->
 <% } %>
 
 <%
-    const numPageBtn = 5;
+    const numPageBtn = 2;
     let start = Math.max(1, currPage-Math.floor(numPageBtn/2));
-    console.log(Math.floor(numPageBtn/2) + "serio?");
     let end = Math.min(numPages, currPage+Math.floor(numPageBtn/2));
 %>
 
 <% for (let i = start; i <= end; i++) { %>
-    <form class="col-sm" method="get" action="/gjournal/<%= i %>">
-        <input type="submit" value="<%= i %>">
-    </form>
+<!--    <form class="col" method="get" action="/gjournal/<%= i %>">-->
+        <input class="col-sm jpag" type="submit" value="<%= i %>" moveTo="<%= i %>">
+<!--    </form>-->
 <% } %>
 <% if (currPage < numPages) { %>
-    <form class="col-sm" method="get" action="/gjournal/<%= parseInt(currPage) + 1 %>">
-        <input type="submit" value="Next">
-    </form>
-    <form class="col-sm" method="get" action="/gjournal/<%= numPages %>">
-        <input type="submit" value="Last">
-    </form>
+<!--    <form class="col" method="get" action="/gjournal/<%= parseInt(currPage) + 1 %>">-->
+        <input class="col-sm jpag" type="submit" value="Next" moveTo="<%= parseInt(currPage) + 1 %>">
+<!--    </form>-->
+<!--    <form class="col" method="get" action="/gjournal/<%= numPages %>">-->
+        <input class="col-sm jpag" type="submit" value="Last" moveTo="<%= numPages %>">
+<!--    </form>-->
 <% } %>
+
+<script>
+    const paginationButtons = document.querySelectorAll(".jpag");
+
+    paginationButtons.forEach(function (e) {
+        console.log(e.getAttribute("moveTo"));
+        e.addEventListener("click", function() {
+            window.location.href='/gjournal/' + e.getAttribute("moveTo");
+        });
+    });
+</script>
