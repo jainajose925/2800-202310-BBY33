@@ -197,6 +197,10 @@ function toggleMode() {
   reset();
 }
 
+document.getElementById('home').addEventListener('click', function() {
+  window.location.href = '/dashboard';
+});
+
 // Initialize the game
 reset();
 
