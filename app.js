@@ -8,6 +8,8 @@ const session = require("express-session")
 const app = express();
 const crypto = require('crypto');
 
+const {OAUTH_REFRESH_TOKEN, PORT, NODE_SESSION_SECRET, OAUTH_CLIENT_SECRET, OAUTH_CLIENTID, MAIL_USERNAME, HOST_URL} = require("./env");
+
 const routes = require('./routes');
 
 
@@ -15,9 +17,9 @@ const routes = require('./routes');
 
 const {mongoStore, url, getUserData, findUserByEmail, updateUserData, getUserFromToken, setUserToken} = require('./database/db');
 
-console.log(__dirname);
+// console.log(__dirname);
 
-const port = process.env.PORT || 8080;
+const port = PORT || 8080;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -26,14 +28,13 @@ const registryRoute = require('./routes/create');
 const { resetPassword } = require('./controllers/authController');
 
 const journalRoute = require('./routes/gjournal');
+const chatRoute = require('./routes/chat');
 
 
 const nodemailer = require('nodemailer');
-const env = require('./env.js');
-
 
 app.use(session({
-    secret: process.env.NODE_SESSION_SECRET,
+    secret: NODE_SESSION_SECRET,
     store: mongoStore,
     resave: true,
     saveUninitialized: false,
@@ -44,10 +45,10 @@ app.use(session({
 }));
 
 const oauth2Client = {
-    user: process.env.MAIL_USERNAME,
-    clientId: process.env.OAUTH_CLIENTID,
-    clientSecret: process.env.OAUTH_CLIENT_SECRET,
-    refreshToken: process.env.OAUTH_REFRESH_TOKEN
+    user: MAIL_USERNAME,
+    clientId: OAUTH_CLIENTID,
+    clientSecret: OAUTH_CLIENT_SECRET,
+    refreshToken: OAUTH_REFRESH_TOKEN
 };
 console.log(oauth2Client);
 
@@ -69,6 +70,7 @@ routes.use((req, res, next) => {
 
 const publicRoutes = require('./public');
 const {resetJournal, loadJournal, isNewDay, getUserEntries, saveJournal} = require("./controllers/journalController");
+
 app.use('/', publicRoutes);
 
 app.set('view engine', 'ejs');
@@ -76,8 +78,12 @@ app.use('/login', authRoute);
 
 app.use('/signup', registryRoute);
 app.use('/gjournal', journalRoute);
+app.use('/chatbot', chatRoute);
+
 
 app.get('/', (req, res) => {
+
+    // console.log((new Date()).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }));
     res.redirect('/login');
 });
 
@@ -117,13 +123,6 @@ app.get('/account', (req, res) => {
         res.redirect('/');
 });
 
-app.get('/gjournal', async (req, res) => {
-    console.log(req.session);
-    if (req.session.authenticated) {
-        res.render("journal", {req: req, entries: await getUserEntries(req)});
-    } else
-        res.redirect('/');
-});
 
 
 async function generateToken(expiration, account) {
@@ -152,7 +151,7 @@ app.post('/resetpassword/', async (req, res) => {
             html: `
         <p>You are receiving this because you (or someone else) have requested the reset of the password for your account.</p>
         <p>Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:</p>
-        <a href="${env.HOST_URL}/pwreset/${token}">${env.HOST_URL}/pwreset/${token}</a>
+        <a href="${HOST_URL}/pwreset/${token}">${HOST_URL}/pwreset/${token}</a>
         <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
     `
         };
@@ -188,6 +187,13 @@ app.get('/pwreset/:token', async (req, res) => {
     }
 });
 
+app.post('/mt', (req, res) => {
+    const {ch1, ch2, ch3, ch4, ch5} = req.body;
+    req.session.moods = [ch1, ch2, ch3, ch4, ch5].filter((selectedMood) => selectedMood != null);
+    console.log(`${req.session.moods}`);
+    res.redirect('/chatbot');
+    // res.st
+})
 app.post('/updateuser/', async (req, res) => {
     const token = req.body.token;
     const password = req.body.password;
@@ -206,20 +212,10 @@ app.post('/updateuser/', async (req, res) => {
 });
 
 
-
 app.post('/signout', (req, res) => {
     req.session.destroy();
     res.redirect('/');
 });
-
-app.get('/chatbot', (req, res) => {
-    console.log(req.session);
-    if (req.session.authenticated) {
-        res.render("chatbot");
-    } else
-        res.redirect('/');
-});
-
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

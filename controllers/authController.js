@@ -3,8 +3,9 @@ const joi = require('joi');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { findUserByEmail, insertUser, updateUserPassword} = require('../database/db');
+const {REFRESH_TOKEN_SECRET, ACCESS_TOKEN_SECRET} = require("../env");
 const saltRounds = 10;
-
+const expiryTime = 1 * 60 * 60 * 1000; // HOUR | MINUTE | SECOND | MILLISECOND
  async function loginUser(req, res) {
     let {email, password} = req.body;
 
@@ -33,6 +34,8 @@ const saltRounds = 10;
         req.session.email = account.email;
         req.session.authenticated = true;
         req.session.goal = account.goal;
+        req.session.maxAge = expiryTime;
+
         res.redirect('/dashboard');
         // return {account, password};
         return;
@@ -96,20 +99,20 @@ async function resetPassword(userEmail, password) {
 
 
 async function createRefreshToken(user) {
-    return jwt.sign({username: user.username, email: user.email}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '7d'});
+    return jwt.sign({username: user.username, email: user.email}, REFRESH_TOKEN_SECRET, {expiresIn: '7d'});
 }
 
 async function authenticateUser(refreshToken) {
-    const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    const decoded = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET);
     return jwt.sign({
         username: decoded.username,
         email: decoded.email
-    }, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15m'});
+    }, ACCESS_TOKEN_SECRET, {expiresIn: '15m'});
 }
 
 async function validateAccessToken(authToken) {
     try {
-        const decoded = jwt.verify(authToken, process.env.ACCESS_TOKEN_SECRET);
+        const decoded = jwt.verify(authToken, ACCESS_TOKEN_SECRET);
         return await findUserByEmail(decoded.email);
     } catch (error) {
         throw new Error(error.message);
