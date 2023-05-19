@@ -113,6 +113,14 @@ app.get('/settings', (req, res) => {
         res.redirect('/');
 });
 
+app.get('/letsplay', (req, res) => {
+    console.log(req.session);
+    if (req.session.authenticated) {
+        res.render("tictactoe");
+    } else
+        res.redirect('/');
+});
+
 
 app.get('/account', (req, res) => {
     console.log(req.session);
