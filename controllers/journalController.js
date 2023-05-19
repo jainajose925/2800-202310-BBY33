@@ -105,6 +105,9 @@ function addItemToList(__list, __item) {
 
 function getDateObj(dateString) {
     let tempDate;
+    if (dateString == null) {
+        return new Date();
+    }
     if (dateString.includes("/")) {
         tempDate = dateString.split("/");
         return new Date(parseInt(tempDate[2]), parseInt(tempDate[0]) - 1, parseInt(tempDate[1]));
