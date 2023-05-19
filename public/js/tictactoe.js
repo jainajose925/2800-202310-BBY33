@@ -146,13 +146,13 @@ function makeMove(index, who) {
     } else if(who === "comp") {
       message = `Computer wins!\nBetter luck next time!`;
     }
-    document.getElementById('boardContainer').style.height = '650px';
+    document.getElementById('boardContainer').style.height = '690px';
     document.getElementById('finish').style.visibility = 'visible';
     document.getElementById('winner-message').innerText = message;
     gameOver = true;
   } else if (getEmptyCells(board).length === 0) {
     let message = `It's a tie!`
-    document.getElementById('boardContainer').style.height = '650px';
+    document.getElementById('boardContainer').style.height = '690px';
     document.getElementById('finish').style.visibility = 'visible';
     document.getElementById('winner-message').innerText = message;
     gameOver = true;
@@ -181,7 +181,7 @@ function reset() {
     cells[i].classList.remove("player");
     cells[i].classList.remove("comp");
   }
-  document.getElementById('boardContainer').style.height = '570px';
+  document.getElementById('boardContainer').style.height = '600px';
   document.getElementById('finish').style.visibility = 'hidden';
   document.getElementById('winner-message').innerText = "";
   
