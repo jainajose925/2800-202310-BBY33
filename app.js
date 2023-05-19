@@ -17,7 +17,6 @@ const routes = require('./routes');
 
 const {mongoStore, url, getUserData, findUserByEmail, updateUserData, getUserFromToken, setUserToken} = require('./database/db');
 
-// console.log(__dirname);
 
 const port = PORT || 8080;
 app.use(express.json());
@@ -192,7 +191,6 @@ app.post('/mt', (req, res) => {
     req.session.moods = [ch1, ch2, ch3, ch4, ch5].filter((selectedMood) => selectedMood != null);
     console.log(`${req.session.moods}`);
     res.redirect('/chatbot');
-    // res.st
 })
 app.post('/updateuser/', async (req, res) => {
     const token = req.body.token;

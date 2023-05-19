@@ -3,7 +3,7 @@ const express = require('express');
 const {getUserEntries, saveJournal, getStart, getEnd, getEntryListByPage, getNumPages} = require("../controllers/journalController");
 const router = express.Router();
 
-router.post('/:id', saveJournal);
+router.post('/:id',saveJournal);
 router.get('/', async (req, res) => {
     if (req.session.authenticated) {
         res.redirect('/gjournal/1');

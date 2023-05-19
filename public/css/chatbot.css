@@ -78,6 +78,17 @@
   background-color: #a189a5;
 }
 
+.actionIcon {
+  width: 5%;
+  float: inherit;
+  cursor: pointer;
+}
+
+.extraActions {
+  /*background-color: red;*/
+  float: right;
+}
+
 span {
   color: #4e4e4e;
   font-size: small;
@@ -110,7 +121,7 @@ span {
 #send {
   border:none;
   background: none;
-  margin-left: 10;
+  margin-left: 10px;
   flex:3%
 }
 

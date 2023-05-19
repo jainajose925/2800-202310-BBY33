@@ -1,6 +1,7 @@
 // Colliding Ideas with Emma and Teddy
 const systemMessages = require('../systemMessages.json');
 const {findUserByEmail} = require("./db");
+const {CHATGPT_API_KEY} = require("../env");
 
 let session = {};
 
@@ -35,19 +36,9 @@ async function startSessionInfo(userID, username, moods) {
 }
 
 function getCorrectPrompt(input) {
-    // if (input.includes("__listType")) {
-    //     const moodArray = input.split(",");
-    //     const len = moodArray.length;
-    //     let promptString = "I feel ";
-    //     for (let i = 0; i < len - 1; i++)
-    //         promptString += `${moodArray[i]}, `;
-    //     promptString += "please give me coping methods.";
-    //     return promptString;
-    // }
     switch (true) {
-
-        case input.includes("sad"):
-            return "I feel sad. Please help.";
+        // case input.includes("sad"):
+        //     return "I feel sad. Please help.";
         default:
             return input;
     }

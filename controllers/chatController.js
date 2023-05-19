@@ -1,7 +1,6 @@
-
-// recieveMessage(user, message);
-
 const {generateResponse, generateResponseforMood} = require("../database/openAPI");
+const {findUserByEmail, updateUserData} = require("../database/db");
+const {ObjectId} = require("mongodb");
 
 async function recieveMessage(req, res) {
     /*
@@ -23,4 +22,18 @@ async function recieveMessage(req, res) {
     // req.session.aiResponses =
 }
 
-module.exports = {recieveMessage};
+async function saveBotMessage(req) {
+    const __user = await findUserByEmail(req.session.email);
+    if (__user.data[3] == null)
+        __user.data[3] = [req.body.botMsg];
+    else {
+        if (!__user.data[3].includes(req.body.botMsg))
+            __user.data[3].push(req.body.botMsg);
+        else return;
+    }
+    await updateUserData(new ObjectId(__user._id), __user.data);
+}
+module.exports = {
+    recieveMessage,
+    saveBotMessage
+};
