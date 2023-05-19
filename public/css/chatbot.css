@@ -58,20 +58,35 @@
 
 .userMessage {
   text-align: right;
+  align-self: end;
+  /*float: right;*/
   padding: 5px;
-  min-height: 40px;
-  line-height: 20px;
-  width: 100%;
+  /*min-height: 40px;*/
+  /*line-height: 20px;*/
+  width: fit-content;
   background-color: #d8c3dc;
 }
 
 .botMessage {
-  float: left;
+  text-align: left;
+  align-self: start;
+  /*float: left;*/
   padding: 5px;
-  min-height: 30px;
-  line-height: 25px;
-  width: 100%;
+  /*min-height: 30px;*/
+  /*line-height: 25px;*/
+  width: fit-content;
   background-color: #a189a5;
+}
+
+.actionIcon {
+  width: 5%;
+  float: inherit;
+  cursor: pointer;
+}
+
+.extraActions {
+  /*background-color: red;*/
+  float: right;
 }
 
 span {
@@ -84,7 +99,7 @@ span {
   padding: 25px;
   border-radius: 25px;
   width: 90%;
-  height: 90%; 
+  height: 90%;
 }
 
 #chat-form {
@@ -106,7 +121,7 @@ span {
 #send {
   border:none;
   background: none;
-  margin-left: 10;
+  margin-left: 10px;
   flex:3%
 }
 
