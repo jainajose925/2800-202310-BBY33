@@ -1,0 +1,4 @@
+{
+  "load": "System Messages",
+  "end": "Message to gain info about the user in json format"
+}

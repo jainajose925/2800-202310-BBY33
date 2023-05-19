@@ -12,58 +12,62 @@
       </div>
       <div id="chat">
         <div id="chat-title">
-          <h2>Chat!</h2>
+          <h2>Let's talk about you!</h2>
         </div>
-        <form id="chat-content">
+        <form id="chat-content" action="/mt" method="post">
           <div id = "moodLogger">
             <p>How are you feeling?</p>
             <div id="moodButtons">
+              <div id="custom-child-container">
               <label for="happyButton">
-                <input type="checkbox" id="happyButton" class="moodButton" value="happy">
+                <input name="ch1" type="checkbox" id="happyButton" class="moodButton" value="happy">
                 Happy
               </label>
               <br>
               <label for="sadButton">
-                <input type="checkbox" id="sadButton" class="moodButton" value="sad">
+                <input name="ch2" type="checkbox" id="sadButton" class="moodButton" value="sad">
                 Sad
               </label>
               <br>
               <label for="angryButton">
-                <input type="checkbox" id="angryButton" class="moodButton" value="angry">
+                <input name="ch3" type="checkbox" id="angryButton" class="moodButton" value="angry">
                 Angry
               </label>
               <br>
-              <label for="anxiousButton">
-                <input type="checkbox" id="anxiousButton" class="moodButton" value="anxious">
-                Anxious
-              </label>
-              <br>
-              <label for="tiredButton">
-                <input type="checkbox" id="tiredButton" class="moodButton" value="tired">
-                Tired
-              </label>
+              </div>
+              <div id="custom-child-container">
+                <label for="anxiousButton">
+                  <input name="ch4" type="checkbox" id="anxiousButton" class="moodButton" value="anxious">
+                  Anxious
+                </label>
+                <br>
+                <label for="tiredButton">
+                  <input name="ch5" type="checkbox" id="tiredButton" class="moodButton" value="tired">
+                  Tired
+                </label>
+              </div>
             </div>
-            <button id="submitMood">Submit</button>
+            <button id="submitMood" value="Sup">Submit</button>
           </div>
         </form>
-        <div id="chat-form">
-          <form id="chat-form-input">
-            <input type="text" id="usermsg" placeholder="Start a conversation...">
-            <button type="submit" id="send"><img src="/img/send.svg"></button>
-          </form>
-        </div>
       </div>
       <div id = "gratitude">
         <h3>Gratitude</h3>
+        <button class="editButton" onclick="enableEdit()">
+          Edit<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+      </button>
 <!--        DESIGN HERE UWU -->
-        <form action="/gjournal" method="post">
-        <textarea name="gjournalTxt" class="textbox"><%= text %>
-        </textarea>
-          <input class="saveButton" type="submit" value="Save">
+        <form id="journalForm" action="/gjournal/1" method="post">
+        <textarea name="gjournalTxt" class="textbox" disabled><%= text %></textarea>
+          <button class="saveButton hidden" type="submit"><p>Save</p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </button>
         </form>
       </div>
     </div>
     <script src="/js/nav.js"></script>
     <script src="/js/main.js"></script>
 <%- include("templates/footer") %>
+
+
 
