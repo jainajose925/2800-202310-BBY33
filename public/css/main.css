@@ -37,7 +37,7 @@
 
 #moodLogger {
   width: 80%;
-  height: 110px;
+  height: 6em;
   margin-top: 15px;
   margin-bottom: 15px;
   background-color: #B2EEB1;
@@ -52,7 +52,7 @@
 }
 
 #moodLogger.expanded {
-  height: 150px;
+  height: 8.5em;
 }
 
 #chat-content {
@@ -70,7 +70,19 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+  flex-wrap: wrap;
+  align-content: center;
+  text-align: center;
 }
+
+#custom-child-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin: auto;
+}
+
+
 
 label {
   display: block;
@@ -330,7 +342,36 @@ svg {
   display: none;
 }
 
-/*mobile css*/
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 900px) {
+  .container {
+    width: 80%;
+  }
+}
 
+@media only screen and (max-width: 800px) {
+  .container {
+    width: 85%;
+  }
+}
+
+/*mobile css*/
+@media only screen and (max-width: 650px) {
+  .container {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .container {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 540px) {
+  #moodLogger {
+    height: 9em;
+  }
+  #moodLogger.expanded {
+    height: 11em;
+  }
 }
