@@ -228,12 +228,13 @@ app.get('/resetpassword/complete/expired', (req, res) => {
     res.render('resetpwexpired');
 });
 
-
-
-
 app.post('/signout', (req, res) => {
     req.session.destroy();
     res.redirect('/');
+});
+
+app.get('/*', (req,res) => {
+    res.render('404');
 });
 
 app.listen(port, () => {
