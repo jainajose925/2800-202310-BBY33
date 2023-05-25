@@ -1,8 +1,9 @@
 const express = require('express');
 // const {sendMessage} = require("../middleware/chatMiddleware");
-const {saveBotMessage, deleteSavedMessage, getSavedMessages} = require("../controllers/chatController");
+const {saveBotMessage, deleteSavedMessage, getSavedMessages, getSavedMSGbyPage, numPerPage, getNumPages} = require("../controllers/chatController");
 const {startSession, sendMessage, getUserHistory, getBotHistory} = require("../database/openAPI");
 const {findUserByEmail} = require("../database/db");
+// const {getEntryListByPage, getNumPages} = require("../controllers/journalController");
 const router = express.Router();
 
 router.post('/', async (req, res) => {
@@ -42,10 +43,12 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-
-    const list = (await getSavedMessages(req));
+    // const entryList = await getEntryListByPage(req, req.params.id);
+    // if (entryList.length !== 0)
+    //     res.render("journal", {req: req, entries: entryList, currPage: req.params.id, numPages: await getNumPages(req)});
+    const list = (await getSavedMSGbyPage(req, req.params.id));
     console.log(list.length);
-    res.render("savedMessages", {savedMSGs: list});
+    res.render("savedMessages", {savedMSGs: list, currPage: req.params.id, numPages: await getNumPages(req), numPrPage: numPerPage});
 });
 // router.get('/', (req, res) => {
 //     console.log(req.session);

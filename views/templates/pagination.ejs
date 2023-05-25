@@ -34,12 +34,12 @@
     // console.log();
     if (window.location.href.split("/").includes("gjournal"))
         route = "/gjournal/";
-    else
-        route = "/chatbot/"
-        paginationButtons.forEach(function (e) {
-            console.log(e.getAttribute("moveTo"));
-            e.addEventListener("click", function() {
-                window.location.href='/gjournal/' + e.getAttribute("moveTo");
-            });
+    else if (window.location.href.split("/").includes("chatbot"))
+        route = "/chatbot/";
+    paginationButtons.forEach(function (e) {
+        console.log(e.getAttribute("moveTo"));
+        e.addEventListener("click", function() {
+            window.location.href=route + e.getAttribute("moveTo");
         });
+    });
 </script>

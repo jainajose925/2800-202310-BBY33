@@ -77,16 +77,20 @@
   width: fit-content;
   background-color: #a189a5;
 }
-
 .actionIcon {
-  width: 5%;
-  float: inherit;
+  width: 20px;
+  /*height: 100%;*/
+  font-size: small;
+  float: right;
+
   cursor: pointer;
 }
 
 .extraActions {
-  /*background-color: red;*/
-  float: right;
+
+  /*width: 100%;*/
+  background-color: red;
+  /*float: right;*/
 }
 
 span {

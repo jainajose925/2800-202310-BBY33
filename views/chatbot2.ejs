@@ -20,30 +20,22 @@
                         <span><br>You <%= userTxtArray[i][1] %></span>
                     </p>
                 <% } %>
-                <% if (botTxtArray[i] != null && userTxtArray[i].length !== 0) { %>
-                    <p class="text-break botMessage">
-                        <% let rawTxt = botTxtArray[i][0].split("\n"); %>
-                        <% for (let s = 0; s < rawTxt.length; s++) { %>
-                            <%= rawTxt[s] %>
-                            <% if (s !== (rawTxt.length - 1)) { %>
-                                <br>
+                    <% if (botTxtArray[i] != null && userTxtArray[i].length !== 0) { %>
+                        <p class="text-break botMessage" data-value = <%= i %>>
+                            <% let rawTxt = botTxtArray[i][0].split("\n"); %>
+                            <% for (let s = 0; s < rawTxt.length; s++) { %>
+                                <%= rawTxt[s] %>
+                                <% if (s !== (rawTxt.length - 1)) { %>
+                                    <br>
+                                <% } %>
                             <% } %>
-                        <% } %>
-                        <span><br>Bot  <%= botTxtArray[i][1] %>
-                        <span class="extraActions">
-                                <img style="display:none" class="actionIcon" src="/img/star-favorite.svg">
+                            <span id="display"><br>Bot  <%= botTxtArray[i][1] %>
+                        <span id="extraAction" class="extraActions" hidden="">
+                                <img id="save" class="actionIcon" src="/img/star-favorite.svg">
                             </span>
                         </span>
-                    </p>
-                <% } %>
-<!--                    <p class="text-break botMessage">-->
-<!--                        Hey!Hey!Hey!Hey!Hey!Hey!Hey!Hey!Hey!Hey!Hey!-->
-<!--                        <span><br>Time-->
-<!--                            <span class="extraActions">-->
-<!--                                <img style="display:none" class="actionIcon" src="/img/star-favorite.svg">-->
-<!--                            </span>-->
-<!--                        </span>-->
-<!--                    </p>-->
+                        </p>
+                    <% } %>
             <% } %>
         </form>
         <div id="chat-form">

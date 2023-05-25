@@ -39,13 +39,20 @@ function getStart(currPage) {
 }
 
 async function getSavedMSGbyPage(req, num) {
+    // console.log(getStart())
     const __messages = await getSavedMessages(req);
     const arry = __messages.slice(getStart(num), getEnd(num));
+    console.log(arry);
         // [__messages[0].slice(getStart(num), getEnd(num)),
         // __entries[1].slice(getStart(num), getEnd(num))];
     return arry;
     // return (await getUserEntries(req)).slice(
     //     getStart(num), getEnd(num));
+}
+
+async function getNumPages(req) {
+    const len = (await getSavedMessages(req)).length;
+    return Math.ceil(len / numPerPage);
 }
 
 module.exports = {
@@ -54,5 +61,7 @@ module.exports = {
     deleteSavedMessage,
     getEnd,
     getStart,
-    getSavedMSGbyPage
+    getSavedMSGbyPage,
+    getNumPages,
+    numPerPage
 };
