@@ -22,7 +22,13 @@
                 <% } %>
                 <% if (botTxtArray[i] != null && userTxtArray[i].length !== 0) { %>
                     <p class="text-break botMessage">
-                        <%= botTxtArray[i][0] %>
+                        <% let rawTxt = botTxtArray[i][0].split("\n"); %>
+                        <% for (let s = 0; s < rawTxt.length; s++) { %>
+                            <%= rawTxt[s] %>
+                            <% if (s !== (rawTxt.length - 1)) { %>
+                                <br>
+                            <% } %>
+                        <% } %>
                         <span><br>Bot  <%= botTxtArray[i][1] %>
                         <span class="extraActions">
                                 <img style="display:none" class="actionIcon" src="/img/star-favorite.svg">

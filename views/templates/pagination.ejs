@@ -1,3 +1,4 @@
+
 <% if (currPage > 1) {%>
 <!--    <form class="col-sm" method="get" action="/gjournal/1">-->
         <input class="col-sm jpag" type="submit" value="First" moveTo="1">
@@ -29,11 +30,16 @@
 
 <script>
     const paginationButtons = document.querySelectorAll(".jpag");
-
-    paginationButtons.forEach(function (e) {
-        console.log(e.getAttribute("moveTo"));
-        e.addEventListener("click", function() {
-            window.location.href='/gjournal/' + e.getAttribute("moveTo");
+    let route = "";
+    // console.log();
+    if (window.location.href.split("/").includes("gjournal"))
+        route = "/gjournal/";
+    else
+        route = "/chatbot/"
+        paginationButtons.forEach(function (e) {
+            console.log(e.getAttribute("moveTo"));
+            e.addEventListener("click", function() {
+                window.location.href='/gjournal/' + e.getAttribute("moveTo");
+            });
         });
-    });
 </script>

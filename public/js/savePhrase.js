@@ -1,9 +1,8 @@
 console.log("Hi?");
 let botParagraphs = document.querySelectorAll('.botMessage');
-let action = document.querySelectorAll('.actionIcon');
-let i = 0;
-botParagraphs.forEach(function (ele) {
+botParagraphs.forEach(ele => {
     let holdTimeout;
+
     /**
      * Function is displaying the list of actions to the bot message.
      *
@@ -13,19 +12,21 @@ botParagraphs.forEach(function (ele) {
         holdTimeout = setTimeout(function() {
             // Perform action when the button is held for a certain duration
             ele.setAttribute("style", "background-color: #c1b1c3");
-            action[i].removeAttribute("style");
+            // console.log(ele.children[0].childNodes[2].childNodes[1].style = "");
+            // ele.children[0].childNodes[2].childNodes[0].removeAttribute("style");
+            ele.children[0].childNodes[2].childNodes[1].style = "";
             // console.log(ele.innerText);
             // console.log("Button held");
         }, 1000); // Adjust the duration as needed
     });
 
-    action[i].addEventListener("click", function() {
+    ele.children[0].childNodes[2].childNodes[1].addEventListener("click", function() {
         fetch('/chatbot/save', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ botMsg: ele.innerHTML })
+            body: JSON.stringify({ botMsg: ele.innerText })
         })
             .then(response => {
                 if (response.ok) {

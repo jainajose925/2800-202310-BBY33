@@ -82,7 +82,8 @@ function getStart(currPage) {
  */
 async function getEntryListByPage(req, num) {
     const __entries = await getUserEntries(req);
-    const arry = [__entries[0].slice(getStart(num), getEnd(num)), __entries[1].slice(getStart(num), getEnd(num))];
+    const arry = [__entries[0].slice(getStart(num), getEnd(num)),
+        __entries[1].slice(getStart(num), getEnd(num))];
     return arry;
     // return (await getUserEntries(req)).slice(
     //     getStart(num), getEnd(num));
