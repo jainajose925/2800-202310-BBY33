@@ -218,12 +218,13 @@ app.post('/updateuser/', async (req, res) => {
     }
 });
 
-
-
-
 app.post('/signout', (req, res) => {
     req.session.destroy();
     res.redirect('/');
+});
+
+app.get('/*', (req,res) => {
+    res.render('404');
 });
 
 app.listen(port, () => {
