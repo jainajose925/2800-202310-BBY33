@@ -32,7 +32,8 @@
   text-align: center;
   align-items: center;
   border: solid 3px #4e4e4e;
-  border-radius: 10px;
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
 }
 
 #moodLogger {
@@ -61,7 +62,7 @@
   width: 100%;
   background-color: #F8E3CA;
   border: solid 3px #4e4e4e;
-  border-radius: 10px;
+  border-radius: 0 0 10px 10px;
   display: flex;
   justify-content: center;
 }
@@ -226,7 +227,7 @@ input[type="checkbox"] {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: solid #4e4e4e;
+  border: solid #4e4e4e 3px;
   border-radius:10px;
   font-weight: 650;
   height: 50px;
@@ -243,10 +244,11 @@ input[type="checkbox"] {
   align-items: center;
   justify-content: center;
   border-radius: 25px;
-  border: solid #4e4e4e;
+  border: solid #4e4e4e 3px;
 }
 
-h3 {
+h3, h2 {
+  margin-top: 5px;
   font-size: 1.75em;
   font-weight: 600;
   color: #4e4e4e;
