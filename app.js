@@ -131,8 +131,6 @@ app.get('/account', (req, res) => {
         res.redirect('/');
 });
 
-
-
 async function generateToken(expiration, account) {
     const token = await crypto.randomBytes(20).toString('hex');
     const tokenExpiration = Date.now() + expiration * 1000;
@@ -216,6 +214,18 @@ app.post('/updateuser/', async (req, res) => {
             res.redirect('/resetpassword/complete/success');
         }
     }
+});
+
+app.get('/resetpassword/success', (req, res) => {
+    res.render('emaillSuccess');
+});
+
+app.get('/resetpassword/complete/success', (req, res) => {
+    res.render('resetpwsuccess');
+});
+
+app.get('/resetpassword/complete/expired', (req, res) => {
+    res.render('resetpwexpired');
 });
 
 
