@@ -8,6 +8,8 @@
 </head>
 <body>
     <%- include("templates/nav") %>
+    <!-- MoodUp Reference -->
+    <img class="eg" onclick="window.location.href='https://moodup-e8744.web.app/'" src="/img/moodup_graffiti.svg">
     <div class="container">
         <h2>Entry History</h2>
         <ul id="entries">
@@ -23,7 +25,7 @@
                     dateParts = [tempEntryDate[2], tempEntryDate[0] - 1, tempEntryDate[1]];
                 } else
                     dateParts = entries[1][i].split('-');
-                let date = new Date(parseInt(dateParts[0]), parseInt(dateParts[1]) - 1 /* Month values in Date objects are 0-based. (0-11) */,
+                let date = new Date(parseInt(dateParts[0]), parseInt(dateParts[1]) /* Month values in Date objects are 0-based. (0-11) */,
                 parseInt(dateParts[2]));
                 date.setHours(0, 0, 0, 0);
 
@@ -42,18 +44,10 @@
             <% } %>
 
         </ul>
-        <div id="pagination" class="">
+        <div id="pagination" class="text-center ">
                 <%- include("templates/pagination", {currPage: currPage, numPages: numPages})%>
         </div>
         </div>
-    </div>
-    <script>
-        let entryList = '<%= entries %>';
-        // function showContents() {
-        //
-        // }
-        // let showContents =
-    </script>
     <script src="/js/journal.js"></script>
 
 

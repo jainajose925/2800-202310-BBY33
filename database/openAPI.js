@@ -58,6 +58,11 @@ async function sendMessage(userID, message) {
 
     const tempArray = [msg.text, msg.time.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })];
     session[userID].userHistory.push(tempArray);
+    /* Valorant: Chamber Reference */
+    if (message.toUpperCase().includes("YOU WANT TO PLAY?")) {
+        session[userID].botHistory.push(["Let's Play!", (new Date()).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })]);
+        return true;
+    }
 
     const options = {};
     if (session[userID].botHistory.length > 0) {
@@ -72,36 +77,13 @@ async function sendMessage(userID, message) {
     if (res.text.includes("{")) {
         const jsonTxt = JSON.parse(res.text);
         botTxtList = ([jsonTxt['text'], date]);
-    } else {
+    } else
         botTxtList = [res.text, date];
-    }
+
     session[userID].botHistory.push(botTxtList);
+    return false;
 
 }
-async function generateResponse(input) {
-    try {
-        const response = await openai.createCompletion({
-            model: "gpt-3.5-turbo",
-            prompt: getCorrectPrompt(input),
-            temperature: 0.4
-            // max_tokens: 100
-        });
-        // const maxTokens = response.
-        // console.log('Maximum tokens:', maxTokens);
-        return response.data.choices[0].text;
-    } catch (error) {
-        if (error.response) {
-            console.error(error.response.status, error.response.data);
-        } else {
-            console.error(`Error with OpenAI API request: ${error.message}`);
-        }
-    }
-}
-
-async function generateResponseforMood(req) {
-    return await generateResponse(req.session.moods + ",__listType");
-}
-
 function isSessionArrayEmpty(userID) {
     return session[userID] == null;
 }
@@ -141,8 +123,6 @@ async function endSession(userID) {
 
 
 module.exports = {
-    generateResponse,
-    generateResponseforMood,
     startSession,
     sendMessage,
     getUserHistory,

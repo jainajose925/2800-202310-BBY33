@@ -1,0 +1,35 @@
+<%- include("templates/header") %>
+  <link rel="stylesheet" type="text/css" href="css/tictactoe.css">
+</head>
+<body>
+  <div id="boardContainer">
+      <h1>Let's Play!</h1>
+      <h4>Tic Tac Toe</h4>
+      <div id="board">
+        <div class="cell" onclick="makeMove(0,'player')"></div>
+        <div class="cell" onclick="makeMove(1,'player')"></div>
+        <div class="cell" onclick="makeMove(2,'player')"></div>
+        <div class="cell" onclick="makeMove(3,'player')"></div>
+        <div class="cell" onclick="makeMove(4,'player')"></div>
+        <div class="cell" onclick="makeMove(5,'player')"></div>
+        <div class="cell" onclick="makeMove(6,'player')"></div>
+        <div class="cell" onclick="makeMove(7,'player')"></div>
+        <div class="cell" onclick="makeMove(8,'player')"></div>
+      </div>
+        <div class="toggle-button-cover">
+          <div id="button-3" class="button r">
+            <input class="checkbox" type="checkbox" onchange="toggleMode()">
+            <div class="knobs"></div>
+            <div class="layer"></div>
+          </div>    
+        </div>
+        <div id="finish">
+          <h4 id="winner-message"></h4>
+          <button id="playAgain" onclick="reset()">Play Again<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></button>
+          <button id="home">Home<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></button>
+        </div>       
+  </div>
+
+  <script src="/js/tictactoe.js"></script>
+</body>
+</html>

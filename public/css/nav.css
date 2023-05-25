@@ -14,7 +14,7 @@ body {
   padding: 5px;
   color: #4e4e4e;
   background-color: #D3B2DA;
-  border: solid #4e4e4e;
+  border: solid #4e4e4e 2px;
   width: 100%;
 }
 
@@ -59,4 +59,12 @@ nav button[type="submit"]:hover {
   color: #F6F4F4;
   --p: 100%;
   --t: 0.3s;
+}
+
+.eg {
+  align-self: end;
+  width: 5px;
+  float: right;
+  opacity: 17%;
+  cursor: pointer;
 }
