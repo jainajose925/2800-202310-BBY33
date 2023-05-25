@@ -124,7 +124,7 @@ form {
   position: absolute;
   transform: translateY(2px);
   display: block;
-  background-color: none;
+  /*background-color: none;*/
   animation: none;
 }
 
@@ -189,3 +189,4 @@ form {
   opacity: 1;
   right: 0;
  }
+

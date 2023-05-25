@@ -18,6 +18,7 @@
           <div id = "moodLogger">
             <p>How are you feeling?</p>
             <div id="moodButtons">
+              <div id="custom-child-container">
               <label for="happyButton">
                 <input name="ch1" type="checkbox" id="happyButton" class="moodButton" value="happy">
                 Happy
@@ -33,15 +34,18 @@
                 Angry
               </label>
               <br>
-              <label for="anxiousButton">
-                <input name="ch4" type="checkbox" id="anxiousButton" class="moodButton" value="anxious">
-                Anxious
-              </label>
-              <br>
-              <label for="tiredButton">
-                <input name="ch5" type="checkbox" id="tiredButton" class="moodButton" value="tired">
-                Tired
-              </label>
+              </div>
+              <div id="custom-child-container">
+                <label for="anxiousButton">
+                  <input name="ch4" type="checkbox" id="anxiousButton" class="moodButton" value="anxious">
+                  Anxious
+                </label>
+                <br>
+                <label for="tiredButton">
+                  <input name="ch5" type="checkbox" id="tiredButton" class="moodButton" value="tired">
+                  Tired
+                </label>
+              </div>
             </div>
             <button id="submitMood" value="Sup">Submit</button>
           </div>
