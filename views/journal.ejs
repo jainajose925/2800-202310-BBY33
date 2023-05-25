@@ -23,8 +23,10 @@
                 if (entries[1][i].includes("/")) {
                     const tempEntryDate = entries[1][i].split("/");
                     dateParts = [tempEntryDate[2], tempEntryDate[0] - 1, tempEntryDate[1]];
-                } else
+                } else {
                     dateParts = entries[1][i].split('-');
+                    dateParts[1]--;
+                }
                 let date = new Date(parseInt(dateParts[0]), parseInt(dateParts[1]) /* Month values in Date objects are 0-based. (0-11) */,
                 parseInt(dateParts[2]));
                 date.setHours(0, 0, 0, 0);

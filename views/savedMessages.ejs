@@ -1,0 +1,38 @@
+<!--// PlaceHolder for main merge issue.-->
+<%- include("templates/header") %>
+
+<link rel="stylesheet" type="text/css" href="/css/nav.css">
+<link rel="stylesheet" type="text/css" href="/css/savedMSGs.css">
+<link rel="stylesheet" type="text/css" href="/css/journal.css">
+<!--<link rel="stylesheet" type="text/css" href="/css/chatbot.css">-->
+
+</head>
+<body>
+<%-include("templates/nav") %>
+<div class="container">
+    <div id="chat">
+        <div id="chat-title">
+            <h2>Your Saved Messages</h2>
+        </div>
+        <div class="saved-messages">
+            <ul id="msgs">
+
+            </ul>
+        </div>
+        <div id="pagination" class="text-center ">
+            <%- include("templates/pagination", {currPage: currPage, numPages: numPages})%>
+        </div>
+    </div>
+</div>
+
+<script>
+    const currPg = <%= currPage %>;
+    const numPerPg = <%= numPrPage %>;
+    let messages = `<%= savedMSGs %>`;
+</script>
+
+<script src="/js/nav.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/savedMSGs.js"></script>
+<%- include("templates/footer") %>
+

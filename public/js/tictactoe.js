@@ -4,6 +4,7 @@ let currentPlayer = "X";
 let gameOver = false;
 let mode = "easy"; // Default mode is hard
 
+let lockboard = false;
 // Array of all possible winning combinations
 const winningCombinations = [
   [0, 1, 2],
@@ -126,25 +127,26 @@ function makeAIMove() {
 
 // Make a move on the board
 function makeMove(index, who) {
+  if (lockboard && who === "player")
+    return;
+  lockboard = true;
   if (gameOver || board[index] !== "") {
     return;
   }
 
-  board[index] = currentPlayer;
-  document.getElementsByClassName("cell")[index].innerText = currentPlayer;
-  
-  if(who === "player") {
+    board[index] = currentPlayer;
+    document.getElementsByClassName("cell")[index].innerText = currentPlayer;
+    if (who === "player") {
     document.getElementsByClassName("cell")[index].classList.toggle("player");
-  } else if(who === "comp") {
-    document.getElementsByClassName("cell")[index].classList.toggle("comp");
-  }
+    /* Prevent people for speed clicking in the board. */
 
-  if (checkWin(currentPlayer)) {
-    var message;
-    if(who === "player") {
-      message = `You win!`;
-    } else if(who === "comp") {
-      message = `Computer wins!\nBetter luck next time!`;
+    } else if (who === "comp") {
+      document.getElementsByClassName("cell")[index].classList.toggle("comp");
+      let i = 0;
+      document.querySelectorAll(".cell").forEach(function(e) {
+        e.setAttribute("onclick", `makeMove(${i},'player')`);
+        i++;
+      });
     }
     document.getElementById('finish').style.visibility = 'visible';
     document.getElementById('winner-message').innerText = message;
@@ -159,19 +161,27 @@ function makeMove(index, who) {
     
     if (currentPlayer === "O") {
       if (mode === "easy") {
-       setTimeout(makeRandomMove, getRandomDelay());
+       setTimeout(function() {
+         makeRandomMove();
+         lockboard = false;
+       }, getRandomDelay());
       } else if (mode === "hard") {
-        setTimeout(makeAIMove, getRandomDelay());
+        setTimeout(function() {
+          makeAIMove();
+          lockboard = false;
+        }, getRandomDelay());
       }
     }
-  }
+
+
+
 }
 
 // Reset the game
 function reset() {
   board = ["", "", "", "", "", "", "", "", ""];
   currentPlayer = "X";
-  gameOver = false;
+  [gameOver, lockboard] = [false, false];
 
   let cells = document.getElementsByClassName("cell");
   for (let i = 0; i < cells.length; i++) {

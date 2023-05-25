@@ -69,6 +69,7 @@ routes.use((req, res, next) => {
 
 const publicRoutes = require('./public');
 const {resetJournal, loadJournal, isNewDay, getUserEntries, saveJournal} = require("./controllers/journalController");
+const {getSavedMessages} = require("./controllers/chatController");
 
 app.use('/', publicRoutes);
 
@@ -226,6 +227,8 @@ app.get('/resetpassword/complete/success', (req, res) => {
 app.get('/resetpassword/complete/expired', (req, res) => {
     res.render('resetpwexpired');
 });
+
+
 
 
 app.post('/signout', (req, res) => {

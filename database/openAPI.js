@@ -6,6 +6,7 @@ const {CHATGPT_API_KEY} = require("../env");
 let session = {};
 
 async function startSession(req) {
+
     const __user = await findUserByEmail(req.session.email);
     if (!isSessionArrayEmpty(__user._id))
         return;
@@ -49,6 +50,7 @@ function getCorrectPrompt(input) {
     TODO: FYI Emma's code but Teddy configured its modifications to match with our data.
  */
 async function sendMessage(userID, message) {
+    const userLocale = Intl.DateTimeFormat().resolvedOptions().locale;
     // console.log(session[userID]);
     let msg = {
         text: getCorrectPrompt(message),
@@ -56,11 +58,11 @@ async function sendMessage(userID, message) {
         time: new Date()
     }
 
-    const tempArray = [msg.text, msg.time.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })];
+    const tempArray = [msg.text, msg.time.toLocaleTimeString(userLocale, { hour: 'numeric', minute: '2-digit', hour12: true })];
     session[userID].userHistory.push(tempArray);
     /* Valorant: Chamber Reference */
     if (message.toUpperCase().includes("YOU WANT TO PLAY?")) {
-        session[userID].botHistory.push(["Let's Play!", (new Date()).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })]);
+        session[userID].botHistory.push(["Let's Play!", (new Date()).toLocaleTimeString(userLocale, { hour: 'numeric', minute: '2-digit', hour12: true })]);
         return true;
     }
 
@@ -72,6 +74,7 @@ async function sendMessage(userID, message) {
 
     const res = await session[userID].instance.sendMessage(JSON.stringify(msg), options);
 
+
     const date = (new Date).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
     let botTxtList;
     if (res.text.includes("{")) {
@@ -80,6 +83,7 @@ async function sendMessage(userID, message) {
     } else
         botTxtList = [res.text, date];
 
+    console.log(botTxtList);
     session[userID].botHistory.push(botTxtList);
     return false;
 
