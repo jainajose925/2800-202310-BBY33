@@ -26,6 +26,7 @@ const authRoute = require('./routes/auth');
 const registryRoute = require('./routes/create');
 const { resetPassword } = require('./controllers/authController');
 
+const settingRoute = require('./routes/settings');
 const journalRoute = require('./routes/gjournal');
 const chatRoute = require('./routes/chat');
 
@@ -79,6 +80,7 @@ app.use('/login', authRoute);
 app.use('/signup', registryRoute);
 app.use('/gjournal', journalRoute);
 app.use('/chatbot', chatRoute);
+app.use('/settings', settingRoute);
 
 
 app.get('/', (req, res) => {
@@ -106,13 +108,6 @@ app.get('/dashboard', async (req, res) => {
         res.redirect('/');
 });
 
-app.get('/settings', (req, res) => {
-    console.log(req.session);
-    if (req.session.authenticated) {
-        res.render("settings");
-    } else
-        res.redirect('/');
-});
 
 app.get('/letsplay', (req, res) => {
     console.log(req.session);
@@ -123,13 +118,7 @@ app.get('/letsplay', (req, res) => {
 });
 
 
-app.get('/account', (req, res) => {
-    console.log(req.session);
-    if (req.session.authenticated) {
-        res.render("account", {req: req});
-    } else
-        res.redirect('/');
-});
+
 
 
 

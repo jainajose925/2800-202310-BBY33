@@ -1,13 +1,13 @@
-console.log("Hi?");
+const savedMSGLink = document.getElementById("savedMSGHyper-Link");
+savedMSGLink.addEventListener("click", function() {
+    window.location.href = "/chatbot/1";
+})
 let botParagraphs = document.querySelectorAll('.botMessage');
 
 botParagraphs.forEach(ele => {
     let saved = false;
-    /**
-     * Function is displaying the list of actions to the bot message.
-     *
-     * Reference: ChatGPT.
-     */
+
+
     ele.addEventListener("dblclick", function() {
         if (saved)
             return;

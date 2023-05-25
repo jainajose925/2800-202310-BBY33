@@ -1,9 +1,12 @@
-// PlaceHolder for main merge issue.
+/*
+    Combination of Authorization and Authentication
+ */
 const joi = require('joi');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { findUserByEmail, insertUser, updateUserPassword} = require('../database/db');
+const { findUserByEmail, insertUser, updateUserPassword, updateUserData} = require('../database/db');
 const {REFRESH_TOKEN_SECRET, ACCESS_TOKEN_SECRET} = require("../env");
+const {ObjectId} = require("mongodb");
 const saltRounds = 10;
 const expiryTime = 1 * 60 * 60 * 1000; // HOUR | MINUTE | SECOND | MILLISECOND
  async function loginUser(req, res) {
@@ -96,8 +99,6 @@ async function resetPassword(userEmail, password) {
 
 }
 
-
-
 async function createRefreshToken(user) {
     return jwt.sign({username: user.username, email: user.email}, REFRESH_TOKEN_SECRET, {expiresIn: '7d'});
 }
@@ -119,11 +120,23 @@ async function validateAccessToken(authToken) {
     }
 }
 
+async function isAdmin(req) {
+    const __user = await findUserByEmail(req.session.email);
+    if (__user.data[4] == null) {
+        __user.data[4] = ["user"];
+        await updateUserData(new ObjectId(__user._id), __user.data);
+        return false;
+    }
+    return __user.data[4] == "admin";
+
+}
+
 module.exports = {
     loginUser,
     registerUser,
     createRefreshToken,
     authenticateUser,
     validateAccessToken,
-    resetPassword
+    resetPassword,
+    isAdmin
 };
