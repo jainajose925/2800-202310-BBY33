@@ -131,6 +131,14 @@ app.get('/account', (req, res) => {
         res.redirect('/');
 });
 
+app.get('/feedback', (req, res) => {
+   res.render("help");
+});
+
+app.get('/help', (req, res) => {
+    res.render("help");
+});
+
 async function generateToken(expiration, account) {
     const token = await crypto.randomBytes(20).toString('hex');
     const tokenExpiration = Date.now() + expiration * 1000;
@@ -178,6 +186,49 @@ app.post('/resetpassword/', async (req, res) => {
         res.redirect('/resetpassword/success');
     }
 });
+
+app.post('/sendfeedback/', async (req, res) => {
+    const email = req.body.email;
+    const subject = req.body.subject;
+    const feedback = req.body.message;
+    if (!email) {
+        console.log('Email required');
+        return res.status(400).send('Email required');
+    }
+    if (!subject) {
+        console.log('Subject required');
+        return res.status(400).send('Subject required');
+    }
+    if (!feedback) {
+        console.log('Feedback required');
+        return res.status(400).send('Message required');
+    }
+
+    let mailOptions = {
+        from: `${email}`,
+        to: '	groundd.app@gmail.com',
+        subject: `User Feedback: ${subject}`,
+        html: `
+        <div>
+        <h2>Feedback from ${email}</h2>
+        <h2>Subject: ${subject}</h2>
+        <p>Do not click on any links in this email, as they may be malicious.</p>
+        </div>
+        ----------------------------------------
+        <p>${feedback}</p>`
+    }
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.log(error);
+            res.status(500).send('Error while sending email');
+        } else {
+            console.log('Email sent: ' + info.response);
+            res.redirect('/');
+        }
+    })
+
+})
 
 app.get('/pwreset/:token', async (req, res) => {
     const token = req.params.token;

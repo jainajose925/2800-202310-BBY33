@@ -1,0 +1,21 @@
+
+<%- include("templates/header") %>
+<link rel="stylesheet" type="text/css" href="/css/forgotpw.css">
+
+</head>
+<body>
+
+<div class="container">
+    <h1>Help / Feedback</h1>
+    <h4></h4>
+    <form action="sendfeedback" method="post">
+        <div class="form-group">
+            <input name="email" type="email" class="form-control" placeholder="Enter your email..." required>
+            <input name="subject" type="text" class="form-control" placeholder="subject" required>
+            <textarea name="message" class="form-control" placeholder="Enter your message..." required></textarea>
+        </div>
+        <button id="feedbackbutton" type="submit">Submit</button>
+    </form>
+    <form id="back" action="/" method="get"><button type="submit">Back</button></form>
+</div>
+<%- include("templates/footer") %>
