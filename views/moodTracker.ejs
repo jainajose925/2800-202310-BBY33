@@ -1,0 +1,32 @@
+<!--// PlaceHolder for main merge issue.-->
+<%- include("templates/header") %>
+    <link rel="stylesheet" type="text/css" href="/css/moodTracker.css">
+    </head>
+<body>
+<h2>Mood Tracker Test</h2>
+
+    <form id="moodForm" class="center-form" method="post" action="/logMood">
+        <label>
+            Happy
+            <input id="__oliveGreen" name="mood" type="radio" value="happy">
+        </label>
+        <label>
+            Sad
+            <input id="__vistaBlue" name="mood" type="radio" value="sad">
+       </label>
+        <label>
+            Angry
+            <input id="__congoPink" name="mood" type="radio" value="angry">
+        </label>
+        <label>
+            Anxious
+            <input id="__arsenic" name="mood" type="radio" value="anxious">
+        </label>
+        <label>
+            Tired
+            <input id="__ashGray" name="mood" type="radio" value="tired">
+        </label>
+<!--        <button>Save</button>-->
+    </form>
+    <script src="/js/moodTracker.js"></script>
+<%- include("templates/footer") %>
