@@ -1,31 +1,25 @@
 console.log("Hi?");
 let botParagraphs = document.querySelectorAll('.botMessage');
-let action = document.querySelectorAll('.actionIcon');
-let i = 0;
-botParagraphs.forEach(function (ele) {
-    let holdTimeout;
+
+botParagraphs.forEach(ele => {
+    let saved = false;
     /**
      * Function is displaying the list of actions to the bot message.
      *
      * Reference: ChatGPT.
      */
-    ele.addEventListener("mousedown", function() {
-        holdTimeout = setTimeout(function() {
-            // Perform action when the button is held for a certain duration
-            ele.setAttribute("style", "background-color: #c1b1c3");
-            action[i].removeAttribute("style");
-            // console.log(ele.innerText);
-            // console.log("Button held");
-        }, 1000); // Adjust the duration as needed
-    });
+    ele.addEventListener("dblclick", function() {
+        if (saved)
+            return;
 
-    action[i].addEventListener("click", function() {
+        saved = !saved;
+            ele.children.namedItem("display").children.namedItem("extraAction").toggleAttribute("hidden");
         fetch('/chatbot/save', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ botMsg: ele.innerHTML })
+            body: JSON.stringify({ botMsg: ele.innerText })
         })
             .then(response => {
                 if (response.ok) {
@@ -36,14 +30,14 @@ botParagraphs.forEach(function (ele) {
             })
             .then(responseText => {
                 console.log(responseText); // Response from the server
-                this.setAttribute("style", "display: none");
             })
             .catch(error => {
                 console.error('Error:', error);
             });
-    })
-    ele.addEventListener("mouseup", function() {
-        ele.removeAttribute("style");
-        clearTimeout(holdTimeout);
     });
+
+
+    // ele.children.namedItem("display").children.namedItem("extraAction").children.namedItem("save").addEventListener("click", function() {
+
+    // })
 })

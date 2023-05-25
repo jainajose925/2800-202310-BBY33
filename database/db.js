@@ -47,7 +47,7 @@ async function updateUserData(userId, data) {
 }
 
 async function getUserData(userId) {
-    const user = await userCollection.findOne({ _id: ObjectId(userId) });
+    const user = await userCollection.findOne({ _id: new ObjectId(userId) });
     return user.data;
 }
 

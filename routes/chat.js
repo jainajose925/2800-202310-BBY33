@@ -1,8 +1,9 @@
 const express = require('express');
 // const {sendMessage} = require("../middleware/chatMiddleware");
-const {saveBotMessage} = require("../controllers/chatController");
+const {saveBotMessage, deleteSavedMessage, getSavedMessages, getSavedMSGbyPage, numPerPage, getNumPages} = require("../controllers/chatController");
 const {startSession, sendMessage, getUserHistory, getBotHistory} = require("../database/openAPI");
 const {findUserByEmail} = require("../database/db");
+// const {getEntryListByPage, getNumPages} = require("../controllers/journalController");
 const router = express.Router();
 
 router.post('/', async (req, res) => {
@@ -16,13 +17,18 @@ router.post('/', async (req, res) => {
 router.post('/:method', async (req, res) => {
     const data = req.body;
     console.log(data);
-    await saveBotMessage(req);
+    if (req.params.method === "save") {
+        await saveBotMessage(req);
+    } else {
+        await deleteSavedMessage(req);
+    }
     res.send('Data received successfully!');
 })
 router.get('/', async (req, res) => {
     if (req.session.authenticated) {
         await startSession(req);
         const __user = await findUserByEmail(req.session.email);
+        // console.log(req.session.moods.length);
         if (req.session.moods != null && req.session.moods.length > 0) {
             let message = "I feel"
             for (let i = 0; i < req.session.moods.length; i++)
@@ -36,6 +42,14 @@ router.get('/', async (req, res) => {
         res.redirect('/');
 });
 
+router.get('/:id', async (req, res) => {
+    // const entryList = await getEntryListByPage(req, req.params.id);
+    // if (entryList.length !== 0)
+    //     res.render("journal", {req: req, entries: entryList, currPage: req.params.id, numPages: await getNumPages(req)});
+    const list = (await getSavedMSGbyPage(req, req.params.id));
+    console.log(list.length);
+    res.render("savedMessages", {savedMSGs: list, currPage: req.params.id, numPages: await getNumPages(req), numPrPage: numPerPage});
+});
 // router.get('/', (req, res) => {
 //     console.log(req.session);
 //     if (req.session.authenticated) {
