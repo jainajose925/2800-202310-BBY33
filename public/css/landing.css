@@ -190,3 +190,8 @@ form {
   right: 0;
  }
 
+ #error {
+   color: red;
+   font-size: 24px;
+ }
+
