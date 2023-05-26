@@ -17,7 +17,6 @@ async function authMiddleware(req, res, next) {
 }
 
 function sessionValidation(req, res, next) {
-    console.log(req.session);
     if (req.session.authenticated) {
         next();
     } else

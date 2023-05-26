@@ -1,56 +1,78 @@
-// PlaceHolder for main merge issue.
-const {findUserByEmail, updateUserData} = require("../database/db");
-const {ObjectId} = require("mongodb");
-const {func} = require("joi");
+const {findUserByEmail, updateUserData} = require("../database/db"); // Get the functions that return the user and updates its data
+const numPerPage = 4; // Number of entries that will display per pagination page
 
-const numPerPage = 4;
+/*
+    Used as the false result of isNewDay.
+    Loads the current journal saved, otherwise an empty string.
+ */
 async function loadJournal(req) {
     const __user = await findUserByEmail(req.session.email);
     let data = dataInstanceOf(__user, req);
     const __entries = await getUserEntries(req);
     const len = __entries[1].length;
-    await updateUserData(new ObjectId(__user._id), data);
+    await updateUserData(__user._id, data);
     if (new Date(req.session.logDate).toLocaleDateString() === getDateObj(__entries[1][len - 1]).toLocaleDateString()) {
         return __entries[0][len - 1];
     } else {
         return "";
     }
 }
+
+/*
+    Used as the true result of isNewDay.
+    Resets the journal entry and returns an empty string.
+ */
 async function resetJournal(req) {
     const __user = await findUserByEmail(req.session.email);
     let data = dataInstanceOf(__user, req);
-    await updateUserData(new ObjectId(__user._id), data);
+    await updateUserData(__user._id, data);
     return "";
 }
 
+/*
+    Determines if the current log date, (generated after the user logs in) is the different as the previous journal's
+    date.
+    Return true if different or the data is null, otherwise false.
+ */
 async function isNewDay(req) {
     const __user = await findUserByEmail(req.session.email);
     const data = __user.data;
     if (data[0] == null)
         return true;
-    else {
+    else
         return data[0][0] !== new Date(req.session.logDate).toLocaleDateString();
-    }
 }
 
+/*
+    The name is inspired by a singleton.
+    Previous handlers (Check if the user data is null)
+    update their log date.
+    It is impossible to get a null value for data, as for every registry of a user, their data gets auto-generated.
+ */
 function dataInstanceOf(__user, req) {
-    if (__user.data != null) {
-        let tempData = __user.data;
-        tempData[0][0] = new Date(req.session.logDate).toLocaleDateString();
-        return tempData;
-    }
-    return [[new Date(req.session.logDate).toLocaleDateString()], [""], [new Date(req.session.logDate).toLocaleDateString()]];
+    let tempData = __user.data;
+    tempData[0][0] = new Date(req.session.logDate).toLocaleDateString();
+    return tempData;
 }
 
+/*
+    Get the data and its second and third index to get the data about user entries.
+    data = [ [logDate], [journalText], [journalTime], [chatBotText], [userType] ]
+ */
 async function getUserEntries(req) {
     const __user = await findUserByEmail(req.session.email);
     let __data = dataInstanceOf(__user, req);
-    return [__data[1], __data[2]];}
+    return [__data[1], __data[2]];
+}
 
+/*
+    Saves the current journal to the database.
+ */
 async function saveJournal(req, res){
     const __user = await findUserByEmail(req.session.email);
     let data = dataInstanceOf(__user, req);
     let __entries = await getUserEntries(req);
+    // Overwrite the current journal
     if (await isPreviousEntryToday(req, __entries)) {
         __entries[0][__entries[0].length - 1] = req.body.gjournalTxt;
         data[1] = __entries[0];
@@ -60,14 +82,20 @@ async function saveJournal(req, res){
        data[2] = __entries[1];
     }
 
-    await updateUserData(new ObjectId(__user._id), data);
+    await updateUserData(__user._id, data);
     res.redirect('/dashboard');
 }
 
+/*
+    Returns if the current log date session is the same as the last entry's log date.
+ */
 async function isPreviousEntryToday(req, __entries) {
     return new Date(req.session.logDate).toLocaleDateString() === getDateObj(__entries[1][__entries[1].length - 1]).toLocaleDateString();
 }
 
+/*
+    Get the maximum index of
+ */
 function getEnd(currPage) {
     return Math.max(0, ((currPage - 1) * numPerPage) + numPerPage);
 }
