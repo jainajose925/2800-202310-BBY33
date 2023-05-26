@@ -1,5 +1,6 @@
 const express = require('express');
 const {isAdmin} = require("../controllers/authController");
+const {getListOfUsers} = require("../database/db");
 const router = express.Router();
 router.get('/', async(req, res) => {
     console.log(req.session);
@@ -10,7 +11,7 @@ router.get('/', async(req, res) => {
 });
 
 
-router.get('/:type',  (req, res) => {
+router.get('/:type',  async (req, res) => {
     if (!req.session.authenticated) {
         res.redirect('/');
         return;
@@ -27,7 +28,7 @@ router.get('/:type',  (req, res) => {
             res.render("help");
             return;
         case "members":
-            res.render("admin");
+            res.render("admin", {__users: await getListOfUsers()});
     }
     // console.log(req.session);
     // if (req.session.authenticated) {

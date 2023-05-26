@@ -64,6 +64,7 @@ button > #home {
 }
 
 #home > svg {
+  align-self: center;
   gap: 0;
   flex: 20%;
   width: 30px;
