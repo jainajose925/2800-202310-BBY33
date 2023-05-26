@@ -15,7 +15,7 @@ const routes = require('./routes');
 
 
 
-const {mongoStore, url, getUserData, findUserByEmail, updateUserData, getUserFromToken, setUserToken} = require('./database/db');
+const {mongoStore, url, getUserData, findUserByEmail, updateUserData, getUserFromToken, setUserToken, getListOfUsers} = require('./database/db');
 
 
 const port = PORT || 8080;
@@ -95,6 +95,7 @@ app.get('/forgotpw', (req, res) => {
 
 app.get('/dashboard', async (req, res) => {
     if (req.session.authenticated) {
+
         /* TODO: Load and Reset Journal. */
         let text;
         {

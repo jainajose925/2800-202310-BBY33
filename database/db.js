@@ -94,6 +94,9 @@ async function updateUserPassword(email, password) {
 }
 
 
+async function getListOfUsers() {
+    return await userCollection.find().toArray();
+}
 connectToDatabase().then();
 
 module.exports = {
@@ -109,6 +112,7 @@ module.exports = {
 
     getUserFromToken,
     setUserToken,
-    updateUserPassword
+    updateUserPassword,
+    getListOfUsers
 
 };
