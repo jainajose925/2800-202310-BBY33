@@ -1,21 +1,14 @@
-// PlaceHolder for main merge issue.
-require('ejs');
-require('./functions');
-require('dotenv').config();
-// const env = require('./env.js');
-const express = require("express");
-const session = require("express-session")
-const app = express();
-const crypto = require('crypto');
+require('ejs'); // EJS Configuration
+require('./functions'); // Extra Functions to be used
+require('dotenv').config(); // Allow .env files to be used
+const express = require("express"); // Main part of the NodeJS Server Side
+const session = require("express-session"); // Allows session to be used and be manipulated
+const app = express(); // Express is used to create the vessel of the main server
+const crypto = require('crypto');  // Used for uniquely creating tokens
+const {OAUTH_REFRESH_TOKEN, PORT, NODE_SESSION_SECRET, OAUTH_CLIENT_SECRET, OAUTH_CLIENTID, MAIL_USERNAME, HOST_URL} = require("./env"); // Required variables for resetting password
+const routes = require('./routes'); // Routes is defined here to allow req.session being modified.
 
-const {OAUTH_REFRESH_TOKEN, PORT, NODE_SESSION_SECRET, OAUTH_CLIENT_SECRET, OAUTH_CLIENTID, MAIL_USERNAME, HOST_URL} = require("./env");
-
-const routes = require('./routes');
-
-
-
-
-const {mongoStore, url, getUserData, findUserByEmail, updateUserData, getUserFromToken, setUserToken, getListOfUsers} = require('./database/db');
+const {mongoStore, url, findUserByEmail, getUserFromToken, setUserToken} = require('./database/db'); // Acquire variables from the database file
 
 
 const port = PORT || 8080;
@@ -37,11 +30,7 @@ app.use(session({
     secret: NODE_SESSION_SECRET,
     store: mongoStore,
     resave: true,
-    saveUninitialized: false,
-    // cookie: {
-    //     secure: false, // only set this if using HTTPS
-    //     sameSite: 'none'
-    // }
+    saveUninitialized: false
 }));
 
 const oauth2Client = {
@@ -50,7 +39,6 @@ const oauth2Client = {
     clientSecret: OAUTH_CLIENT_SECRET,
     refreshToken: OAUTH_REFRESH_TOKEN
 };
-console.log(oauth2Client);
 
 let transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -120,14 +108,6 @@ app.get('/letsplay', (req, res) => {
 
 
 
-
-app.get('/feedback', (req, res) => {
-   res.render("help");
-});
-
-app.get('/help', (req, res) => {
-    res.render("help");
-});
 
 async function generateToken(expiration, account) {
     const token = await crypto.randomBytes(20).toString('hex');
