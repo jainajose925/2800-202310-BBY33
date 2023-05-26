@@ -8,10 +8,12 @@
 <body>
 <%-include("templates/nav") %>
 <div class="container chat-container">
-    <h2 id="greet">Let's Talk About You!</h2>
+    <h2 id="greet">Let's Talk About You!
+    </h2>
     <div id="chat">
         <div id="chat-title">
             <h2>Chat!</h2>
+            <img id="savedMSGHyper-Link" class="actionIcon" src="/img/savedMessages.svg">
         </div>
         <form id="chat-content" class="overflow-auto">
             <% for (let i = 0; i < Math.max(botTxtArray.length, userTxtArray.length); i++) { %>

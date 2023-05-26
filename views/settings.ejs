@@ -12,29 +12,32 @@
       <hr>
       <button id="account" class="op">
         <div class="space"></div>
-        <h1><a href='/account'>Account</a></h1>
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#4e4e4e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-      </button>
-      <hr>
-      <button id="contact" class="op">
-        <div class="space"></div>
-        <h1>Contact</h1>
+        <h1><a href='/settings/account'>Account</a></h1>
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#4e4e4e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
       <hr>
       <button id="about" class="op">
         <div class="space"></div>
-        <h1>About</h1>
+        <h1><a href='/settings/about'>About</a></h1>
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#4e4e4e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
       <hr>
       <button id="help" class="op">
         <div class="space"></div>
-        <h1>Help</h1>
+        <h1><a href='/settings/help'>Help</a></h1>
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#4e4e4e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
       <hr>
+      <button id="admin" class="admin op" hidden>
+        <div class="space"></div>
+        <h1><a href='/settings/members'>Members</a></h1>
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#4e4e4e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <hr class="admin" hidden>
     </div>
 
+    <script>
+      const adminStatus = <%= isAdmin %>
+    </script>
     <script src="/js/settings.js"></script>
 <%- include("templates/footer") %>

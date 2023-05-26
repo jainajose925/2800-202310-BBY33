@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
+
+body {
+  font-family: 'Comfortaa', cursive;
+  background-color: #F0CFD7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#container {
+  box-shadow: 0 8px 14px 0 rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 60%;
+  height: 500px;
+  border: 3px solid #4e4e4e;
+  border-radius: 1rem;
+  align-items: center;
+  background: rgb(149,126,154);
+  background: linear-gradient(99deg, rgba(149,126,154,1) 0%, rgba(184,155,190,1) 25%, rgba(211,178,218,1) 100%);
+  color: #4e4e4e;
+  transform: translateY(15%);
+  padding: 15px;
+}
+
+h4 , h2, p{
+  text-align: center;
+  color: #3e4e4e;
+  font-weight: bolder;
+}
+
+h4 {
+  width: 70%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+input[type="submit"] {
+  width: 150px;
+  height: 40px;
+  background-color: #8DD4CD;
+  color: #4e4e4e;
+  border: solid 1.5px #4e4e4e;
+  font-size: 1em;
+  font-weight: 600;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+input[type="submit"]:hover {
+  color: #e8e8e8;
+  border-color: #e8e8e8;
+}

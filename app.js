@@ -15,7 +15,7 @@ const routes = require('./routes');
 
 
 
-const {mongoStore, url, getUserData, findUserByEmail, updateUserData, getUserFromToken, setUserToken} = require('./database/db');
+const {mongoStore, url, getUserData, findUserByEmail, updateUserData, getUserFromToken, setUserToken, getListOfUsers} = require('./database/db');
 
 
 const port = PORT || 8080;
@@ -26,6 +26,7 @@ const authRoute = require('./routes/auth');
 const registryRoute = require('./routes/create');
 const { resetPassword } = require('./controllers/authController');
 
+const settingRoute = require('./routes/settings');
 const journalRoute = require('./routes/gjournal');
 const chatRoute = require('./routes/chat');
 
@@ -79,6 +80,7 @@ app.use('/login', authRoute);
 app.use('/signup', registryRoute);
 app.use('/gjournal', journalRoute);
 app.use('/chatbot', chatRoute);
+app.use('/settings', settingRoute);
 
 
 app.get('/', (req, res) => {
@@ -93,6 +95,7 @@ app.get('/forgotpw', (req, res) => {
 
 app.get('/dashboard', async (req, res) => {
     if (req.session.authenticated) {
+
         /* TODO: Load and Reset Journal. */
         let text;
         {
@@ -106,13 +109,6 @@ app.get('/dashboard', async (req, res) => {
         res.redirect('/');
 });
 
-app.get('/settings', (req, res) => {
-    console.log(req.session);
-    if (req.session.authenticated) {
-        res.render("settings");
-    } else
-        res.redirect('/');
-});
 
 app.get('/letsplay', (req, res) => {
     console.log(req.session);
@@ -123,12 +119,14 @@ app.get('/letsplay', (req, res) => {
 });
 
 
-app.get('/account', (req, res) => {
-    console.log(req.session);
-    if (req.session.authenticated) {
-        res.render("account", {req: req});
-    } else
-        res.redirect('/');
+
+
+app.get('/feedback', (req, res) => {
+   res.render("help");
+});
+
+app.get('/help', (req, res) => {
+    res.render("help");
 });
 
 async function generateToken(expiration, account) {
@@ -179,6 +177,49 @@ app.post('/resetpassword/', async (req, res) => {
     }
 });
 
+app.post('/sendfeedback/', async (req, res) => {
+    const email = req.body.email;
+    const subject = req.body.subject;
+    const feedback = req.body.message;
+    if (!email) {
+        console.log('Email required');
+        return res.status(400).send('Email required');
+    }
+    if (!subject) {
+        console.log('Subject required');
+        return res.status(400).send('Subject required');
+    }
+    if (!feedback) {
+        console.log('Feedback required');
+        return res.status(400).send('Message required');
+    }
+
+    let mailOptions = {
+        from: `${email}`,
+        to: '	groundd.app@gmail.com',
+        subject: `User Feedback: ${subject}`,
+        html: `
+        <div>
+        <h2>Feedback from ${email}</h2>
+        <h2>Subject: ${subject}</h2>
+        <p>Do not click on any links in this email, as they may be malicious.</p>
+        </div>
+        ----------------------------------------
+        <p>${feedback}</p>`
+    }
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.log(error);
+            res.status(500).send('Error while sending email');
+        } else {
+            console.log('Email sent: ' + info.response);
+            res.redirect('/');
+        }
+    })
+
+})
+
 app.get('/pwreset/:token', async (req, res) => {
     const token = req.params.token;
     const user = await getUserFromToken(token);
@@ -228,12 +269,13 @@ app.get('/resetpassword/complete/expired', (req, res) => {
     res.render('resetpwexpired');
 });
 
-
-
-
 app.post('/signout', (req, res) => {
     req.session.destroy();
     res.redirect('/');
+});
+
+app.get('/*', (req,res) => {
+    res.render('404');
 });
 
 app.listen(port, () => {

@@ -1,6 +1,6 @@
 <!--// PlaceHolder for main merge issue.-->
 <%- include("templates/header") %>
-<link rel="stylesheet" type="text/css" href="/css/account.css">
+<link rel="stylesheet" type="text/css" href="/css/admin.css">
 </head>
 <header>
   <form action="/settings" method="get">
@@ -8,16 +8,24 @@
   </form>
 </header>
   <body>
-
     <div class="container">
-        <h1>Your Account</h1>
-        <hr>
-        <p><h3>Username:</h3><%= req.session.username%> </p>
-
-        <hr>
-        <p><h3>Email:</h3><%= req.session.email %> </p>
-        <hr>
-        <p><h3>Your Mental Health Goal:</h3><%= req.session.goal %><br> </p>
-        <hr>
+        <h1>Member List</h1>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">NAME</th>
+                <th scope="col">EMAIL</th>
+                <th scope="col">GOAL</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% let i = 0; %>
+            <% for (i = 0; i < __users.length; i++) { %>
+                <%- include("templates/user", {__user: __users[i]}) %>
+            <% } %>
+            </tbody>
+        </table>
+<!--        console.log();-->
     </div>
 <%- include("templates/footer") %>

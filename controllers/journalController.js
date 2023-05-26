@@ -45,7 +45,6 @@ function dataInstanceOf(__user, req) {
 async function getUserEntries(req) {
     const __user = await findUserByEmail(req.session.email);
     let __data = dataInstanceOf(__user, req);
-    // console.log(__data);
     return [__data[1], __data[2]];}
 
 async function saveJournal(req, res){
