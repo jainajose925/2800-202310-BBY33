@@ -26,7 +26,7 @@ async function resetJournal(req) {
 async function isNewDay(req) {
     const __user = await findUserByEmail(req.session.email);
     const data = __user.data;
-    if (data == null)
+    if (data[0] == null)
         return true;
     else {
         return data[0][0] !== new Date(req.session.logDate).toLocaleDateString();

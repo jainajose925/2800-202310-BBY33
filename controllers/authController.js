@@ -54,10 +54,12 @@ const expiryTime = 1 * 60 * 60 * 1000; // HOUR | MINUTE | SECOND | MILLISECOND
 }
 
 async function registerUser(req, res) {
+     console.log(req.body);
     let {email, username, password, confirmKey, goal} = req.body;
     if (password !== confirmKey) {
+        console.log("Test");
         /* TODO: HTML Design */
-        res.redirect('/signUp?error=' + "passwordDoesNotMatch");
+        res.redirect('/login?error=' + "passwordDoesNotMatch");
         return;
     }
     const schema = joi.object({
@@ -68,15 +70,16 @@ async function registerUser(req, res) {
     const result = schema.validate({username, email, password});
 
     if (result.error != null) {
+        console.log("Test1");
         /* TODO: HTML Design */
-        res.redirect('/signUp?error=' + result.error.message);
+        res.redirect('/login?error=' + result.error.message);
         return;
     }
 
     const existingUser = await findUserByEmail(email);
     if (existingUser) {
         /* TODO: HTML Design */
-        res.redirect('/signUp?error=Email already exists');
+        res.redirect('/login?error=Email already exists');
         return;
     }
     const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -84,7 +87,8 @@ async function registerUser(req, res) {
         username,
         email,
         password: hashedPassword,
-        goal: goal
+        goal: goal,
+        data: [[(new Date()).toLocaleDateString()], [`Hello ${username}, and welcome to Ground'd!`], [(new Date()).toLocaleDateString()], [], ["user"]]
     };
 
     await insertUser(newUser);
