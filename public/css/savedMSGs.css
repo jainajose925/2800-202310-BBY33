@@ -1,5 +1,10 @@
 .actionIcon {
-    width: 4%;
-    float: left;
+    width: 7%;
+    /*float: left;*/
     cursor: pointer;
+}
+
+#entry {
+    display: flex;
+    justify-content: space-around;
 }

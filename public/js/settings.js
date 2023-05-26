@@ -1,9 +1,13 @@
-// PlaceHolder for main merge issue.
+// // PlaceHolder for main merge issue.
+const hiddenSetting = document.querySelectorAll(".admin");
 const buttons = document.querySelectorAll(".op");
-const links = ["/account", "/contact", "/about", "/help"];
+const links = ["/account", "/about", "/help", "/members"];
 
+if (adminStatus) {
+    hiddenSetting.forEach(element => element.toggleAttribute("hidden"));
+}
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", function () {
-        window.location.href = links[i];
+        window.location.href = "/settings" + links[i];
     });
 }

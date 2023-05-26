@@ -1,5 +1,3 @@
-// console.log(messages.split(",\n"));
-console.log(numPerPg);
 const setup = async () => {
 
     messages =

@@ -22,7 +22,7 @@ header > button {
   border: none;
 }
 
-#account, #contact, #about, #help {
+#account, #admin, #about, #help {
   display: flex;
   flex-direction: row;
   /*align-items: center;*/
@@ -35,9 +35,6 @@ hr {
   border-top: 3px solid #4e4e4e; 
 }
 
-button > .space {
-  flex: 30%;
-}
 
 button > h1 {
   flex: 55%;
@@ -81,8 +78,8 @@ button h1 {
   content: "Account";
 }
 
-#contact h1::before {
-  content: "Contact";
+#admin h1::before {
+  content: "Members";
 }
 
 #about h1::before {
