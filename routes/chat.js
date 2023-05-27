@@ -1,11 +1,16 @@
+/*
+    This file contains the routes for the chatbot module.
+ */
+
 const express = require('express');
-// const {sendMessage} = require("../middleware/chatMiddleware");
 const {saveBotMessage, deleteSavedMessage, getSavedMessages, getSavedMSGbyPage, numPerPage, getNumPages} = require("../controllers/chatController");
 const {startSession, sendMessage, getUserHistory, getBotHistory} = require("../database/openAPI");
 const {findUserByEmail} = require("../database/db");
-// const {getEntryListByPage, getNumPages} = require("../controllers/journalController");
 const router = express.Router();
 
+/*
+    Called when submitting a message to the chatbot.
+ */
 router.post('/', async (req, res) => {
     const user = await findUserByEmail(req.session.email)
     if (await sendMessage(user._id, req.body.userTxt))
@@ -14,6 +19,9 @@ router.post('/', async (req, res) => {
         res.redirect('/chatbot');
 });
 
+/*
+    Handles "stared" messages.
+ */
 router.post('/:method', async (req, res) => {
     const data = req.body;
     console.log(data);
@@ -24,6 +32,10 @@ router.post('/:method', async (req, res) => {
     }
     res.send('Data received successfully!');
 })
+
+/*
+    loads the initial chatbot message.
+ */
 router.get('/', async (req, res) => {
     if (req.session.authenticated) {
         await startSession(req);
@@ -42,20 +54,15 @@ router.get('/', async (req, res) => {
         res.redirect('/');
 });
 
+/*
+    Renders the saved messages page.
+ */
 router.get('/:id', async (req, res) => {
-    // const entryList = await getEntryListByPage(req, req.params.id);
-    // if (entryList.length !== 0)
-    //     res.render("journal", {req: req, entries: entryList, currPage: req.params.id, numPages: await getNumPages(req)});
     const list = (await getSavedMSGbyPage(req, req.params.id));
     console.log(list.length);
     res.render("savedMessages", {savedMSGs: list, currPage: req.params.id, numPages: await getNumPages(req), numPrPage: numPerPage});
 });
-// router.get('/', (req, res) => {
-//     console.log(req.session);
-//     if (req.session.authenticated) {
-//         res.render("chatbot2", {username: req.session.username});
-//     } else
-//         res.redirect('/');
-// });
+
+
 
 module.exports = router;
