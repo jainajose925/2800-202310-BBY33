@@ -4,13 +4,17 @@ const {HOST_URL} = require("../env");
 const {generateToken, transporter} = require("../controllers/authController");
 const router = express.Router();
 
-
+/*
+    Renders the reset password page.
+ */
 router.get('/:log', (req, res) => {
     if (req.params.log == "success")
         res.render("emaillSuccess");
 })
 
-
+/*
+    Sends the email to the user with the reset password link.
+ */
 router.post('/', async (req, res) => {
     const email = req.body.email;
     if (!email) {
@@ -47,6 +51,9 @@ router.post('/', async (req, res) => {
     }
 });
 
+/*
+    Redirects the user to the reset password page if they are within the range of the token's duration time.
+ */
 router.get('/:status/:log', (req, res) => {
     if (req.params.status == "complete")
         switch (req.params.log) {
@@ -58,16 +65,5 @@ router.get('/:status/:log', (req, res) => {
                 return;
         }
 })
-// router.get('/:/success', (req, res) => {
-//     res.render('emaillSuccess');
-// });
-//
-// router.get('/:/complete/success', (req, res) => {
-//     res.render('resetpwsuccess');
-// });
-//
-// router.get('/:/complete/expired', (req, res) => {
-//     res.render('resetpwexpired');
-// });
 
 module.exports = router;

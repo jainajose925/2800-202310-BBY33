@@ -127,7 +127,6 @@ async function registerUser(req, res) {
     res.redirect('/');
 }
 
-// Password is not hashed
 
 /*
     Once submitting the form of resetting the password, it will be rehashed and updated into the database.

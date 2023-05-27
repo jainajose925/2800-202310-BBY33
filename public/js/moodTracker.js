@@ -1,4 +1,4 @@
-// PlaceHolder for main merge issue.
+// Initiate the mood tracker
 const form = document.getElementById("moodForm");
 const radios = form.elements.mood;
 

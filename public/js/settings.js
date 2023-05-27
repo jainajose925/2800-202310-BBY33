@@ -1,4 +1,6 @@
-// // PlaceHolder for main merge issue.
+/*
+    This file is used to handle the settings page.
+ */
 const hiddenSetting = document.querySelectorAll(".admin");
 const buttons = document.querySelectorAll(".op");
 const links = ["/account", "/about", "/help", "/members"];

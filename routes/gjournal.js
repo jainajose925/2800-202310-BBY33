@@ -1,8 +1,14 @@
-// PlaceHolder for main merge issue.
+/*
+    This file contains the routes for the journal page.
+ */
 const express = require('express');
 const {getUserEntries, saveJournal, getStart, getEnd, getEntryListByPage, getNumPages} = require("../controllers/journalController");
 const router = express.Router();
 
+
+/*
+    Called when the user submits the form.
+ */
 router.post('/:id',saveJournal);
 router.get('/', async (req, res) => {
     if (req.session.authenticated) {
@@ -11,6 +17,9 @@ router.get('/', async (req, res) => {
         res.redirect('/');
 });
 
+/*
+    Called when the user visits the journal page.
+ */
 router.get('/:id', async (req, res) => {
     if (req.session.authenticated) {
         const entryList = await getEntryListByPage(req, req.params.id);

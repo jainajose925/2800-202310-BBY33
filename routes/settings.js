@@ -54,6 +54,9 @@ router.post('/:module', async (req, res) => {
 
 })
 
+/*
+    Renders the settings page.
+ */
 router.get('/:type',  async (req, res) => {
     if (!req.session.authenticated) {
         res.redirect('/');
@@ -73,10 +76,6 @@ router.get('/:type',  async (req, res) => {
         case "members":
             res.render("admin", {__users: await getListOfUsers()});
     }
-    // console.log(req.session);
-    // if (req.session.authenticated) {
-    //     res.render("account", {req: req});
-    // } else
-    //     res.redirect('/');
+
 });
 module.exports = router;
