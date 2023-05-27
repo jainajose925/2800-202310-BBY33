@@ -149,7 +149,7 @@ Our project, Team BBY-33, presents to you Ground'd, an all-in-one mental health 
 
 <h3>Features</h3>
 <ul>
-  <li><strong>Gratitde Journal</strong> where users will reflect on their gratitude entries everyday. It also has a history page on the navbar.</li>
+  <li><strong>Gratitude Journal</strong> where users will reflect on their gratitude entries everyday. It also has a history page on the navbar.</li>
   <li><strong>Mood Tracker and Chat Bot</strong> is a combination feature which will help you suggest coping mechanisms based on your current mood. Simply it will tell the chat bot what you feel and provide you the response.</li>
 </ul>
 
