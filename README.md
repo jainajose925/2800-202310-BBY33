@@ -153,9 +153,16 @@ Our project, Team BBY-33, presents to you Ground'd, an all-in-one mental health 
   <li><strong>Mood Tracker and Chat Bot</strong> is a combination feature which will help you suggest coping mechanisms based on your current mood. Simply it will tell the chat bot what you feel and provide you the response.</li>
 </ul>
 
-<h3>Creators</h3>
+<h3>Credit to</h3>
 <ul>
   <li>Emma</li>
   <li>Jaina</li>
   <li>Teddy</li>
+  <li>OpenAI for the Chat Bot</li>
 </ul>
+
+<h3>How did we use AI?</h3>
+<p>Model GPT 3.5 Turbo, from OpenAI's ChatGPT and Github Co-pilot were used to increase development speed. We used the AI as an integrated chatbot that interacts with the user. We think that the lack of an API for GPT4 made it more difficult</p>
+
+<h3>Contact</h3>
+<p>groundedapp@gmail.com</p>
