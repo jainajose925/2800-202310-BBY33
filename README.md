@@ -159,3 +159,15 @@ Our project, Team BBY-33, presents to you Ground'd, an all-in-one mental health 
   <li>Jaina</li>
   <li>Teddy</li>
 </ul>
+
+<h3>AI Tools Used</h3>
+<ul>
+  <li>ChatGPT - Development</li>
+  <li>Github Co-Pilot - Development</li>
+    <li>GPT3.5-Turbo - Chat bot Integration</li>
+</ul>
+
+<h3>Contact</h3>
+<p>
+  If you have any questions or concerns, please contact us at <a href="mailto:groundedapp@gmail.com>groundedapp@gmail.com</a>
+</p>
