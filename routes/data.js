@@ -1,4 +1,6 @@
-// PlaceHolder for main merge issue.
+/*
+    This file contains the routes for the data endpoints.
+ */
 const express = require('express');
 const router = express.Router();
 const {authMiddleware} = require('../middleware/authMiddleware');

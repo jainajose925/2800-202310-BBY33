@@ -148,31 +148,29 @@ function makeMove(index, who) {
         i++;
       });
     }
-    document.getElementById('finish').style.visibility = 'visible';
-    document.getElementById('winner-message').innerText = message;
-    gameOver = true;
-  } else if (getEmptyCells(board).length === 0) {
+
+  if (getEmptyCells(board).length === 0) {
     let message = `It's a tie!`
     document.getElementById('finish').style.visibility = 'visible';
     document.getElementById('winner-message').innerText = message;
     gameOver = true;
   } else {
     currentPlayer = currentPlayer === "X" ? "O" : "X";
-    
+
     if (currentPlayer === "O") {
       if (mode === "easy") {
-       setTimeout(function() {
-         makeRandomMove();
-         lockboard = false;
-       }, getRandomDelay());
+        setTimeout(function () {
+          makeRandomMove();
+          lockboard = false;
+        }, getRandomDelay());
       } else if (mode === "hard") {
-        setTimeout(function() {
+        setTimeout(function () {
           makeAIMove();
           lockboard = false;
         }, getRandomDelay());
       }
     }
-
+  }
 
 
 }

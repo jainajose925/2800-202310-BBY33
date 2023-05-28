@@ -1,4 +1,4 @@
-// PlaceHolder for main merge issue.
+// Desc: This file is the main router for the application. It will route all requests to the correct router.
 const express = require('express');
 const router = express.Router();
 

@@ -1,4 +1,5 @@
-// PlaceHolder for main merge issue.
+
+// Toggle Nav
 $(document).ready(function(){
   $('.nav-toggler').click(function(){
 	$('body').toggleClass('nav-open');

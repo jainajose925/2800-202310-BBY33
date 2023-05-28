@@ -1,7 +1,10 @@
-// PlaceHolder for main merge issue.
+
 const moodButtons = document.querySelectorAll('.moodButton');
 const submitButton = document.querySelector('#submitMood');
 
+/*
+  Mood button event listeners
+ */
 moodButtons.forEach((button) => {
   button.addEventListener('change', () => {
     if (document.querySelector('.moodButton:checked')) {
@@ -17,6 +20,9 @@ moodButtons.forEach((button) => {
   });
 });
 
+/*
+    Enable editing of text box
+ */
 function enableEdit() {
   var editBtn = document.querySelector(".editButton");
   var textBox = document.querySelector(".textbox");
@@ -28,7 +34,9 @@ function enableEdit() {
 }
 
 
-
+/*
+  Saves the changes made to the mood logger
+ */
 function saveChanges() {
   var editBtn = document.querySelector(".editButton");
   var textBox = document.querySelector(".textbox");
